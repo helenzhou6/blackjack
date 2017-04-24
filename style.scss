@@ -1,0 +1,26 @@
+.score {
+  font-weight: 700;
+}
+
+.card {
+  background-color: lightblue;
+}
+
+.dealer {
+  margin-bottom: 1rem;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.dealer-score {
+  visibility: hidden;
+}
+
+.dealer .card {
+  visibility: hidden;
+  &:first-child {
+    visibility: visible;
+  }
+}
