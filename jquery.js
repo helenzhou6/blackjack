@@ -1,17 +1,20 @@
 $(document).ready(function () {
 
-  // TO DO: six decks and half the deck and not use the bottom half
+  // TO DO: six decks and half the deck
 
+  // ESSENTIAL GAME PLAY
   // Generates a new deck
-  function newDeck(deck){
+  function newDeck(){
+    var deck = [];
     var i,
         number,
         suit;
-    for (i=0;i<52;i++){
-      suit = i%4+1; 
-      number = i%13+1;
-      deck.push({suit,number});
+    for (i = 0; i < 52; i++){
+      suit = i%4 + 1; 
+      number = i%13 + 1;
+      deck.push({suit, number});
     }
+    return deck;
   }
 
   // Returns a random card and removes it from the deck
@@ -38,45 +41,126 @@ $(document).ready(function () {
       score += value;
     }
     
-    if (hasAce === true){
-      if (score + 10 < 22) {
+    if (hasAce && (score + 10 < 22)) {
         score += 10;
-      }
     }
     return score;
   }
 
-  // Global variables
+  // GLOBAL VARIABLES
   var deck = [];
+
+  // var players = {
+    
+  // };
+
+
+  var playerProto = {
+    type: '',
+    cards: [],
+    score: 0,
+    result: 'nope',
+  };
+
+  // function Player(type) {
+  //   this.type = type | undefined;
+  //   this.cards = [];
+  //   this.score = 0;
+  //   this.result = 'nope';
+
+  //   this.hit = function() {
+
+  //   };
+  // };
+
+  // var player = new Player();
+
+
+  // var player = Object.assign({}, Object.create(playerProto), {
+  //   type: 'player',
+  // });
+
+  // var player = newPlayer();
+
+  // function newPlayer(type) {
+  //   return Object.assign({}, Object.create(playerProto), {
+  //     type: 'player',
+  //   });
+  // }
 
   var player = {
     type: 'player',
     cards: [],
     score: 0,
+    result: 'nope',
   };
   var dealer = {
     type: 'dealer',
     cards: [],
     score: 0,
   };
-  var result = "nope";
 
-  // Starts the game
-  function restart(){  
-    newDeck(deck); //after each game the deck is reshffled: shouldnt it be when it runs out?  
-    //could put player and dealer into a players array and loop over
+  var secondHand = {
+    type: 'secondHand',
+    cards: [],
+    score: 0,
+    result: undefined,
+  };
+
+  var isFirstRound = false;
+
+  // (RE)STARTS THE GAME
+  function restart(){ 
+    // Maximum number of cards possible for each hand is 11?? Check!!
+    if (deck.length < 22) {
+      deck = newDeck();
+    }
     dealer.score = 0;
     dealer.cards = [];
     player.score = 0;
-    player.cards = [];
-    drawCard(player, 2);
+    player.result = undefined;
+    isFirstRound = false;
+    secondHand.score = 0;
+    secondHand.cards= [];
+    secondHand.result = undefined;
+    player.cards = [{
+      number: 3,
+      suit: 2,
+    }, {
+      number: 3,
+      suit: 3,
+    }];
+    player.score = score(player.cards);
+    ui(player);
+    // drawCard(player, 2);
     drawCard(dealer, 2); 
-    checkNatural();
+    
+    // Checks for split game
+    if (player.cards[0].number === player.cards[1].number) {
+      $('.split').removeClass('is-hidden');
+      $('.player_choice').addClass('is-hidden');
+    }
+
+    // Checks for natural wins (passive)
+    if (dealer.score === 21 && player.score !== 21) {
+      player.result = "The dealer got a natural win";
+      endGame();
+      $('.secondHand').addClass('is-hidden');
+    } else if (player.score === 21 && player.score !== 21) {
+      player.result = "What a natural. You win.";
+      endGame();
+      $('.secondHand').addClass('is-hidden');
+    } else if (player.score === 21 && player.score === 21) {
+      player.result = "You drew - you both got a natural win";
+      endGame();
+      $('.secondHand').addClass('is-hidden');
+    }
   }
 
   restart();
 
-  // Game play
+  // GAME PLAY
+  // Draws a card, then updates score and UI
   function drawCard(type, number = 1){
     for (i = 0; i < number; i++) {
       type.cards.push(removesRanCard(deck));
@@ -85,103 +169,160 @@ $(document).ready(function () {
     ui(type);
   }
 
+  // Dealer plays
   function dealerPlays(){
     while (dealer.score < 17) {
       drawCard(dealer);
-      bust(dealer);
     }
-    updateResult();
+    if (isFirstRound) {
+      updateResult(secondHand)
+    }
+    updateResult(player);
   }
 
-  function hit() {
-    drawCard(player);
-    bust(player);
-    if (player.score === 21) {
-      updateResult();
+  // When player hits
+  function hit(playerType) {
+    drawCard(playerType);
+    
+    // Passive check if gone bust
+    if (playerType.score > 21) {
+      playerType.result = `${playerType.type} went bust!`;
+      if (isFirstRound) {
+        toSecondRound();
+      } else {
+        endGame();
+      }
     }
-  }
 
-  // Checks for natural wins (passive)
-  function checkNatural(){
-    if (dealer.score === 21 && player.score !== 21) {
-      result = "The dealer got a natural win";
-      endGame();
-    } else if (player.score === 21 && dealer.score !== 21) {
-       result = "What a natural. You win.";
-      endGame();
-    } else if (player.score === 21 && dealer.score === 21) {
-      result = "You drew - you both got a natural win";
-      endGame();
-    }
-  }
-
-  // Checks if gone bust (passive)
-  function bust(person){
-    if (person.score > 21) {
-      result = `.${person.type} went bust!`;
-      endGame();
+    // Passive check if reached 21 through hits
+    else if (playerType.score === 21) {
+      dealerPlays();
+      updateResult(playerType);
+      if (isFirstRound) {
+        toSecondRound();
+      } else {
+        endGame();
+      }
     }
   }
 
-  // Updates result & ends the game
-  function updateResult(){
-    if (player.score === dealer.score) {
-      result = 'you drew';
-    } else if (player.score > 21 && dealer.score < 22 || dealer.score > player.score && dealer.score < 22) {
-      result = 'you lost';
+  // Updates result
+  function updateResult(playerType){
+    if (playerType.score === dealer.score) {
+      playerType.result = 'you drew';
+    } else if (playerType.score > 21 && dealer.score < 22 || dealer.score > playerType.score && dealer.score < 22) {
+      playerType.result = 'you lost';
     } else {
-      result = 'you won!';
+      playerType.result = 'you won!';
     }
-    endGame();
   };
 
-  // On click UI
-  $('.stand').click(function(e){
+  //SPLIT GAME
+  // When player agrees to split game
+  function splitGame(){
+    isFirstRound = true;
+
+    // If two aces
+    if (player.cards[0].number === 1) {
+      secondHand.cards.push(player.cards[0]);
+      player.cards.shift();
+      drawCard(player);
+      drawCard(secondHand);
+      dealerPlays();
+      endGame();
+
+    // Otherwise splits the game into two rounds
+    } else {
+      $('.secondHand_choice').removeClass('is-hidden');
+      secondHand.cards.push(player.cards[0]);
+      player.cards.shift();
+      player.score = score(player.cards);
+      secondHand.score = score(secondHand.cards);
+      ui(player);
+      ui(secondHand);
+    }
+  }
+
+  // Transfers from first hand/round to second hand/round
+  function toSecondRound(){
+    isFirstRound = false;
+    $('.player_choice').removeClass('is-hidden');
+    $(".secondHand_choice").addClass("is-hidden");
+  }
+
+// ON CLICK UI
+ $('.stand').click(function(e){
     e.preventDefault();
     dealerPlays();
+    if (isFirstRound) {
+      toSecondRound();
+    } else {
+      endGame();
+    }
   });
 
   $('.retry').click(function(e){
-    $('.hit').removeClass('is-hidden');
-    $('.stand').removeClass('is-hidden');
-    $('.result').addClass('is-hidden');
+    $('.secondHand_choice').addClass('is-hidden');
+    $('.player_choice').addClass('is-hidden');
+    $('.player_result').addClass('is-hidden');
+    $('.secondHand_result').addClass('is-hidden');
+    $('.secondHand').addClass('is-hidden');
     $('.card').remove();
-    $('.score').remove();
+    $('.score').addClass('is-hidden');
     restart();
   });
 
-  $('.hit').click(function(e){
+  $('.player_choice > .hit').click(function(e){
     e.preventDefault();
-    hit();
+    hit(player);
+  });
+
+  $('.secondHand_choice > .hit').click(function(e){
+    e.preventDefault();
+    hit(secondHand);
+  });
+
+  $('.split-button--no').click(function(e){
+      e.preventDefault();
+      $('.split').addClass('is-hidden');
+      $('.player_choice').removeClass('is-hidden');
+  });
+
+  $('.split-button--yes').click(function(e){
+      e.preventDefault();
+      $('.split').addClass('is-hidden');
+      splitGame();
+      $(".secondHand").removeClass('is-hidden');
   });
 
   // Generates HTML
   function ui(person){
-      $(`.${person.type} > .card`).remove();
-      $(`.${person.type} > .score`).remove();
+      $(`.${person.type}_cards > .card`).remove();
+      $(`.${person.type}_score > .score`).remove();
     for (i = 0; i < person.cards.length; i++) {
-        $(`.${person.type}`).append(`
+        $(`.${person.type}_cards`).append(`
           <div class='card'>
             card number = ${person.cards[i].number}
             suit = ${person.cards[i].suit}
           </div>
       `);
     }
-    $(`.${person.type}`).append(`
-      <div class="${person.type}-score score">
+    $(`.${person.type}_score`).append(`
+      <span class="score">
        score = ${person.score}
-      </div>
+      </span>
     `);
   };
 
   // End of game UI
   function endGame(){
-      $('.hit').addClass('is-hidden');
-      $('.stand').addClass('is-hidden');
+      $('.player_choice').addClass('is-hidden');
       $('.split').addClass('is-hidden');
-      $('.dealer-score').css({'visibility': 'visible'});
-      $('.dealer > .card').css({'visibility': 'visible'});
-      $('.result').html(`${result}`).removeClass('is-hidden');
+      $('.dealer_score > .score').css({'visibility': 'visible'}); //CHANGE THESE CLASSES
+      $('.dealer_cards > .card').css({'display': 'block'});
+      $('.player_result').html(`${player.result}`).removeClass('is-hidden');
+      $('.secondHand_choice').addClass('is-hidden');
+      $('.secondHand_result').html(`${secondHand.result}`).removeClass('is-hidden');
   }
 
 });

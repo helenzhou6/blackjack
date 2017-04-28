@@ -1,9 +1,9 @@
-.score {
-  font-weight: 700;
-}
-
 .card {
   background-color: lightblue;
+}
+
+.score {
+	font-weight: 700;
 }
 
 .dealer {
@@ -14,13 +14,13 @@
   display: none;
 }
 
-.dealer-score {
+.dealer_score > .score {
   visibility: hidden;
 }
 
-.dealer .card {
-  visibility: hidden;
+.dealer_cards .card {
+  display: none;
   &:first-child {
-    visibility: visible;
+    display: block;
   }
 }

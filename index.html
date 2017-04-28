@@ -11,19 +11,38 @@
 <body>
   <div class="dealer">
     Dealer Cards
+  <div class="dealer_cards"></div>
+  <div class="dealer_score"></div>
   </div>
 
-  <div class="player">
-    Player Cards
-  </div>
-
-  <div class="choice">
-    <button class="hit">Hit</button>
-    <button class="stand">Stand</button>
-  </div>
-  <div class="result is-hidden">
+  <div class="secondHand is-hidden">
+    Second Hand
+    <div class="secondHand_cards"></div>
+    <div class="secondHand_score"></div>
+    <div class="secondHand_choice is-hidden">
+      <button class="hit">Hit</button>
+      <button class="stand">Stand</button>
+    </div>
+    <div class="secondHand_result is-hidden"></div>
   </div>
   
+  <div class="player">
+    Player Cards
+    <div class="player_cards"></div>
+    <div class="player_score"></div>
+    <div class="player_choice">
+      <button class="hit">Hit</button>
+      <button class="stand">Stand</button>
+    </div>
+    <div class="player_result is-hidden"></div>
+  </div>
+
+  <div class="split is-hidden">
+    <span>Would you like to split the hand?</span>
+    <button class="split-button--yes">Yes</button>
+    <button class="split-button--no">No</button>
+  </div>
+
   <button class="retry">Restart</button>
 
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
