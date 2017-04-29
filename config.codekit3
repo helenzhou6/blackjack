@@ -4,7 +4,7 @@
 	{
 		"name": "Process All Remaining Files and Folders",
 		"stepType": 1,
-		"uuidString": "0F579744-4D6A-403B-9BA1-6C214A27452D"
+		"uuidString": "342B9A16-CE44-4E3B-82E9-430867DC967C"
 		}
 	],
 "creatorBuild": "25813",
@@ -20,7 +20,7 @@
 		"mi": 1,
 		"oA": 1,
 		"oAP": "\/jquery-min.js",
-		"oF": 1,
+		"oF": 0,
 		"sC": 0,
 		"tS": 0
 		},
@@ -29,7 +29,7 @@
 		"bl": 0,
 		"ft": 16,
 		"ma": 0,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/style-min.css",
 		"oF": 0,
 		"oS": 0
@@ -41,7 +41,7 @@
 		"dS": 0,
 		"ft": 4,
 		"ma": 0,
-		"oA": 0,
+		"oA": 1,
 		"oAP": "\/style.css",
 		"oF": 2,
 		"oS": 0,

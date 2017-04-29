@@ -55,12 +55,12 @@ $(document).ready(function () {
   // };
 
 
-  var playerProto = {
-    type: '',
-    cards: [],
-    score: 0,
-    result: 'nope',
-  };
+  // var playerProto = {
+  //   type: '',
+  //   cards: [],
+  //   score: 0,
+  //   result: 'nope',
+  // };
 
   // function Player(type) {
   //   this.type = type | undefined;
@@ -88,16 +88,23 @@ $(document).ready(function () {
   //   });
   // }
 
-  var player = {
-    type: 'player',
-    cards: [],
-    score: 0,
-    result: 'nope',
-  };
+  var tally = {
+    player: 0,
+    dealer: 0,
+  }
+
   var dealer = {
     type: 'dealer',
     cards: [],
     score: 0,
+  };
+
+  var player = {
+    type: 'player',
+    cards: [],
+    score: 0,
+    result: undefined,
+    gameResult: undefined,
   };
 
   var secondHand = {
@@ -105,6 +112,7 @@ $(document).ready(function () {
     cards: [],
     score: 0,
     result: undefined,
+    gameResult: undefined,
   };
 
   var isFirstRound = false;
@@ -115,25 +123,28 @@ $(document).ready(function () {
     if (deck.length < 22) {
       deck = newDeck();
     }
+    isFirstRound = false;
     dealer.score = 0;
     dealer.cards = [];
     player.score = 0;
+    player.cards = [];
     player.result = undefined;
-    isFirstRound = false;
+    player.gameResult = undefined;
     secondHand.score = 0;
     secondHand.cards= [];
     secondHand.result = undefined;
-    player.cards = [{
-      number: 3,
-      suit: 2,
-    }, {
-      number: 3,
-      suit: 3,
-    }];
-    player.score = score(player.cards);
-    ui(player);
-    // drawCard(player, 2);
-    drawCard(dealer, 2); 
+    secondHand.gameResult = undefined;
+    // player.cards = [{
+    //   number: 3,
+    //   suit: 2,
+    // }, {
+    //   number: 3,
+    //   suit: 3,
+    // }];
+    // player.score = score(player.cards);
+    // ui(player);
+    drawCard(player, 2);
+    drawCard(dealer, 2);
     
     // Checks for split game
     if (player.cards[0].number === player.cards[1].number) {
@@ -144,14 +155,17 @@ $(document).ready(function () {
     // Checks for natural wins (passive)
     if (dealer.score === 21 && player.score !== 21) {
       player.result = "The dealer got a natural win";
+      player.gameResult = 'lost';
       endGame();
       $('.secondHand').addClass('is-hidden');
-    } else if (player.score === 21 && player.score !== 21) {
+    } else if (player.score === 21 && dealer.score !== 21) {
       player.result = "What a natural. You win.";
+      player.gameResult = 'won';
       endGame();
       $('.secondHand').addClass('is-hidden');
-    } else if (player.score === 21 && player.score === 21) {
+    } else if (player.score === 21 && dealer.score === 21) {
       player.result = "You drew - you both got a natural win";
+      player.gameResult = 'drew';
       endGame();
       $('.secondHand').addClass('is-hidden');
     }
@@ -186,7 +200,8 @@ $(document).ready(function () {
     
     // Passive check if gone bust
     if (playerType.score > 21) {
-      playerType.result = `${playerType.type} went bust!`;
+      playerType.result = `You got busted!`;
+      playerType.gameResult = 'lost';
       if (isFirstRound) {
         toSecondRound();
       } else {
@@ -210,10 +225,13 @@ $(document).ready(function () {
   function updateResult(playerType){
     if (playerType.score === dealer.score) {
       playerType.result = 'you drew';
+      playerType.gameResult = 'drew';
     } else if (playerType.score > 21 && dealer.score < 22 || dealer.score > playerType.score && dealer.score < 22) {
       playerType.result = 'you lost';
+      playerType.gameResult = 'lost';
     } else {
       playerType.result = 'you won!';
+      playerType.gameResult = 'won';
     }
   };
 
@@ -263,7 +281,7 @@ $(document).ready(function () {
 
   $('.retry').click(function(e){
     $('.secondHand_choice').addClass('is-hidden');
-    $('.player_choice').addClass('is-hidden');
+    $('.player_choice').removeClass('is-hidden');
     $('.player_result').addClass('is-hidden');
     $('.secondHand_result').addClass('is-hidden');
     $('.secondHand').addClass('is-hidden');
@@ -299,7 +317,7 @@ $(document).ready(function () {
   function ui(person){
       $(`.${person.type}_cards > .card`).remove();
       $(`.${person.type}_score > .score`).remove();
-    for (i = 0; i < person.cards.length; i++) {
+    for (i = 0; i < person.cards.length; i++) { // Store in a variable and then call = one page refresh
         $(`.${person.type}_cards`).append(`
           <div class='card'>
             card number = ${person.cards[i].number}
@@ -323,6 +341,22 @@ $(document).ready(function () {
       $('.player_result').html(`${player.result}`).removeClass('is-hidden');
       $('.secondHand_choice').addClass('is-hidden');
       $('.secondHand_result').html(`${secondHand.result}`).removeClass('is-hidden');
+
+      if (player.gameResult === 'won' && (!secondHand.gameResult || secondHand.gameResult === 'drew')) {
+        tally.player ++;
+      } else if (player.gameResult === 'lost' && (!secondHand.gameResult || secondHand.gameResult === 'drew')) {
+        tally.dealer ++;
+      } else if (player.gameResult === 'won' && secondHand.gameResult === 'won') {
+        tally.player += 2;
+      } else if (player.gameResult === 'lost' && secondHand.gameResult === 'lost') {
+        tally.dealer += 2;
+      } else if (player.gameResult === 'lost' && secondHand.gameResult === 'won' || 
+        player.gameResult === 'won' && secondHand.gameResult === 'lost') {
+        tally.player ++;
+        tally.dealer ++;
+      }
+      $('.dealer_tally').html(`${tally.dealer}`);
+      $('.player_tally').html(`${tally.player}`);
   }
 
 });
