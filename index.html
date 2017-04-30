@@ -5,56 +5,85 @@
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
   <link rel="stylesheet" type="text/css" href="style.css">
-  <title></title>
+  <script src="https://use.typekit.net/src7rxu.js"></script>
+  <script src="https://use.typekit.net/src7rxu.js"></script>
+  <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  <title>Blackjack</title>
 </head>
 
 <body>
+  <div class="heading">
+    <h1 class="title">./blackjack</h1>
+    <span class="title_subtext">./how_to_play</span>
+  </div>
+  <div class="margin">
 
-  <div>
-    No. of wins.
-    <div>
-      Dealer: <span class='dealer_tally'>0</span>
+    <div class="tally clearfix">
+      <div>Tally</div>
+      <div class="tally_section">Dealer_
+          <div class='dealer_tally'>0</div>
+      </div>
+      <div class="tally_separator">vs</div>
+      <div class="tally_section">Player_
+        <div class='player_tally'>0</div>
+      </div>
     </div>
-    <div>
-      Player: <span class='player_tally'>0</span>
+
+    <div class="dealer">
+      <div class="player_stats">
+        <h2>dealer_</h2>
+        <div class="dealer_score score is-hidden">
+          <span class="score_text">score:</span>
+          <span class="score_score"></span>
+        </div>
+      </div>
+      <div class="dealer_cards row clearfix"></div>
     </div>
-  </div>
 
-  <div class="dealer">
-    Dealer Cards
-  <div class="dealer_cards"></div>
-  <div class="dealer_score"></div>
-  </div>
-
-  <div class="secondHand is-hidden">
-    Second Hand
-    <div class="secondHand_cards"></div>
-    <div class="secondHand_score"></div>
-    <div class="secondHand_choice is-hidden">
-      <button class="hit">Hit</button>
-      <button class="stand">Stand</button>
+    <div class="secondHand is-hidden">
+      <div class="player_stats">
+        <h2>second_hand_</h2>
+        <div class="secondHand_score">
+          <span class="score_text">score:</span>
+          <span class="score_score"></span>
+        </div>
+      </div>
+      <div class="secondHand_cards row clearfix"></div>
+      
+      <div class="secondHand_choice is-hidden">
+        <button class="hit">Hit</button>
+        <button class="stand">Stand</button>
+      </div>
+      <div class="secondHand_result is-hidden"></div>
     </div>
-    <div class="secondHand_result is-hidden"></div>
-  </div>
-  
-  <div class="player">
-    Player Cards
-    <div class="player_cards"></div>
-    <div class="player_score"></div>
-    <div class="player_choice">
-      <button class="hit">Hit</button>
-      <button class="stand">Stand</button>
+    
+    <div class="player">
+      <div class="player_stats">
+        <h2>player_</h2>
+        <div class="player_score score">
+          <span class="score_text">score:</span>
+          <span class="score_score"></span>
+        </div>
+      </div>
+
+      <div class="player_cards row clearfix"></div>
+      
+      <div class="player_choice">
+        <button class="hit">Hit</button>
+        <button class="stand">Stand</button>
+      </div>
+      <div class="player_result is-hidden"></div>
     </div>
-    <div class="player_result is-hidden"></div>
-  </div>
 
-  <div class="split is-hidden">
-    <span>Would you like to split the hand?</span>
-    <button class="split-button--yes">Yes</button>
-    <button class="split-button--no">No</button>
-  </div>
+    <div class="split is-hidden">
+      <span>Would you like to split the hand?</span>
+      <button class="split-button--yes">Yes</button>
+      <button class="split-button--no">No</button>
+    </div>
 
-  <button class="retry">Restart</button>
+    <button class="retry">Restart</button>
+
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
   <script src="jquery.js"></script>

@@ -1,9 +1,154 @@
+$color: #FBF4F0;
+$background: #151413;
+
+*,
+*:before,
+*:after {
+    border: 1px solid lightblue;
+  box-sizing: border-box;
+}
+
+h2, h1 {
+	margin: 0;
+	font-weight: 400;
+}
+
+h2 {
+	font-size: 2.3rem;
+	display: inline-block;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+body {
+	background-color: $background;
+	color: $color;
+	font-family: nimbus-sans, sans-serif;
+	margin: 1rem;
+}
+
+.margin {
+	margin: 0 auto;
+	width: 80%;
+}
+
+.heading {
+	.title_subtext {
+		transform: rotate(-90deg) translateX(-100%);
+		font-family: fira-mono, monospace;
+		letter-spacing: 2.5px;
+		font-size: 0.75em;
+		display: inline-block;
+		transform-origin: top left;
+	}
+	.title {
+		font-size: 3rem;
+	}
+}
+
+.tally {
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	letter-spacing: 2.5px;
+	// width: 40%;
+	max-width: 9rem;
+	margin: 2rem auto 3rem auto;
+	text-align: center;
+
+	.tally_section {
+		margin-top: 0.8rem;
+		float: left;
+		width: 42%;
+	}
+	.tally_separator {
+		text-transform: lowercase;
+		margin-top: 0.8rem; //wrong
+		width: 16%;
+		float: left;
+
+	}
+}
+
+
+.dealer_tally, .player_tally {
+	font-size: 2rem;
+}
+
+.row {
+	margin-left: -0.5rem;
+	margin-right: -0.5rem;
+}
+
+.card-wrapper {
+	padding-right: 0.5rem;
+	padding-left: 0.5rem;
+	width: 50%;
+	max-width: 10rem;
+	float: left;
+}
+
 .card {
-  background-color: lightblue;
+  background-color: $color;
+  color: $background;
+  display: block;
+  height: 0;
+  padding-bottom: 140%;
+  width: 100%;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+
+  position: relative;
+  font-family: fira-mono, monospace;
+  font-size: 1.5rem;
+  .card_number {
+  	position: absolute;
+  	top: 0;
+  	right: 0;
+  	padding: 1rem;
+  }
+	.card_number--duplicate {
+		position: absolute;
+		padding: 1rem;
+		bottom: 0;
+		left: 0;
+		transform: rotate(180deg);
+	}
+	.card_suit {
+		position: absolute;
+		font-size: 2.2rem;
+		display: block;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
+
+// SCORE
+
+.player_stats {
+	display: inline-block;
 }
 
 .score {
-	font-weight: 700;
+	display: flex;
+	align-items: baseline;
+}
+
+.score_score {
+	font-size: 4rem;
+	letter-spacing: -2.5px;
+	margin-left: auto;
+	margin-top: 0.2rem;
+}
+.score_text {
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	letter-spacing: 2.5px;
 }
 
 .dealer {
@@ -14,13 +159,23 @@
   display: none;
 }
 
-.dealer_score > .score {
+.is-invisible {
   visibility: hidden;
 }
 
-.dealer_cards .card {
-  display: none;
-  &:first-child {
-    display: block;
+.dealer_cards .card-wrapper {
+  display: block;
+
+	//   &:first-child {
+	//   	.card_number, .card_number--duplicate, .card_suit {
+	//   		display: none;
+	//   	}
+	// }
+  &:nth-child(n+3) {
+    display: none;
   }
+}
+
+.card-back {
+	background-color:red;
 }

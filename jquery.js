@@ -116,6 +116,7 @@ $(document).ready(function () {
   };
 
   var isFirstRound = false;
+  var isGameOver = false;
 
   // (RE)STARTS THE GAME
   function restart(){ 
@@ -124,6 +125,7 @@ $(document).ready(function () {
       deck = newDeck();
     }
     isFirstRound = false;
+    isGameOver = false;
     dealer.score = 0;
     dealer.cards = [];
     player.score = 0;
@@ -134,16 +136,16 @@ $(document).ready(function () {
     secondHand.cards= [];
     secondHand.result = undefined;
     secondHand.gameResult = undefined;
-    // player.cards = [{
-    //   number: 3,
-    //   suit: 2,
-    // }, {
-    //   number: 3,
-    //   suit: 3,
-    // }];
-    // player.score = score(player.cards);
-    // ui(player);
-    drawCard(player, 2);
+    player.cards = [{
+      number: 3,
+      suit: 2,
+    }, {
+      number: 3,
+      suit: 3,
+    }];
+    player.score = score(player.cards);
+    ui(player);
+    // drawCard(player, 2);
     drawCard(dealer, 2);
     
     // Checks for split game
@@ -235,7 +237,7 @@ $(document).ready(function () {
     }
   };
 
-  //SPLIT GAME
+  //SPLIT GAME -- but only allows one split rather than the maximum of three splits
   // When player agrees to split game
   function splitGame(){
     isFirstRound = true;
@@ -244,8 +246,8 @@ $(document).ready(function () {
     if (player.cards[0].number === 1) {
       secondHand.cards.push(player.cards[0]);
       player.cards.shift();
-      drawCard(player);
-      drawCard(secondHand);
+      hit(player);
+      hit(secondHand);
       dealerPlays();
       endGame();
 
@@ -256,14 +258,15 @@ $(document).ready(function () {
       player.cards.shift();
       player.score = score(player.cards);
       secondHand.score = score(secondHand.cards);
+      hit(secondHand);
       ui(player);
-      ui(secondHand);
     }
   }
 
   // Transfers from first hand/round to second hand/round
   function toSecondRound(){
     isFirstRound = false;
+    hit(player);
     $('.player_choice').removeClass('is-hidden');
     $(".secondHand_choice").addClass("is-hidden");
   }
@@ -285,17 +288,17 @@ $(document).ready(function () {
     $('.player_result').addClass('is-hidden');
     $('.secondHand_result').addClass('is-hidden');
     $('.secondHand').addClass('is-hidden');
-    $('.card').remove();
-    $('.score').addClass('is-hidden');
+    // $('.card').remove();
+    $('.dealer_score').addClass('is-hidden');
     restart();
   });
 
-  $('.player_choice > .hit').click(function(e){
+  $('.player_choice .hit').click(function(e){
     e.preventDefault();
     hit(player);
   });
 
-  $('.secondHand_choice > .hit').click(function(e){
+  $('.secondHand_choice .hit').click(function(e){
     e.preventDefault();
     hit(secondHand);
   });
@@ -315,32 +318,73 @@ $(document).ready(function () {
 
   // Generates HTML
   function ui(person){
-      $(`.${person.type}_cards > .card`).remove();
-      $(`.${person.type}_score > .score`).remove();
-    for (i = 0; i < person.cards.length; i++) { // Store in a variable and then call = one page refresh
-        $(`.${person.type}_cards`).append(`
-          <div class='card'>
-            card number = ${person.cards[i].number}
-            suit = ${person.cards[i].suit}
+      // $(`.${person.type}_score > .score_score`).remove();
+
+    var cardUI = '';
+
+    for (i = 0; i < person.cards.length; i++) {
+      var icon = 0;
+      if (person.cards[i].number === 11) {
+        icon = 'J';
+      } else if (person.cards[i].number === 12) {
+        icon = 'Q';
+      } else if (person.cards[i].number === 13) {
+        icon = 'K';
+      } else if (person.cards[i].number === 1) {
+        icon = 'A';
+      } else {
+        icon = person.cards[i].number;
+      }
+
+      var suit = 0;
+      if (person.cards[i].suit === 1) {
+        suit = '♠';
+      } else if (person.cards[i].suit === 2) {
+        suit = '♥';
+      } else if (person.cards[i].suit === 3) {
+        suit = '♦';
+      } else if (person.cards[i].suit === 4) {
+        suit = '♣';
+      }
+
+      if (person.type === 'dealer' && i === 0 && !isGameOver){
+        cardUI += `
+        <div class='card-wrapper'>
+            <div class='card card-back'>
+            </div>
           </div>
-      `);
+        `;
+       } else {
+        cardUI += `
+          <div class='card-wrapper'>
+            <div class='card'>
+              <span class="card_number">
+                ${icon}
+              </span>
+              <span class="card_number--duplicate">
+                ${icon}
+              </span>
+              <span class="card_suit">${suit}</span>
+            </div>
+          </div>
+        `;
+      }
     }
-    $(`.${person.type}_score`).append(`
-      <span class="score">
-       score = ${person.score}
-      </span>
-    `);
+
+    $(`.${person.type}_cards`).html(cardUI);
+
+    $(`.${person.type}_score > .score_score`).html(person.score);
   };
 
   // End of game UI
   function endGame(){
       $('.player_choice').addClass('is-hidden');
       $('.split').addClass('is-hidden');
-      $('.dealer_score > .score').css({'visibility': 'visible'}); //CHANGE THESE CLASSES
-      $('.dealer_cards > .card').css({'display': 'block'});
-      $('.player_result').html(`${player.result}`).removeClass('is-hidden');
+      $('.dealer_score').removeClass('is-hidden');
+      $('.dealer_cards .card').css({'display': 'block'});
+      $('.player_result').html(player.result).removeClass('is-hidden');
       $('.secondHand_choice').addClass('is-hidden');
-      $('.secondHand_result').html(`${secondHand.result}`).removeClass('is-hidden');
+      $('.secondHand_result').html(secondHand.result).removeClass('is-hidden');
 
       if (player.gameResult === 'won' && (!secondHand.gameResult || secondHand.gameResult === 'drew')) {
         tally.player ++;
@@ -355,8 +399,9 @@ $(document).ready(function () {
         tally.player ++;
         tally.dealer ++;
       }
-      $('.dealer_tally').html(`${tally.dealer}`);
-      $('.player_tally').html(`${tally.player}`);
+      $('.dealer_tally').html(tally.dealer);
+      $('.player_tally').html(tally.player);
+      isGameOver = true;
   }
 
 });
