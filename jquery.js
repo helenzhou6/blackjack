@@ -116,7 +116,6 @@ $(document).ready(function () {
   };
 
   var isFirstRound = false;
-  var isGameOver = false;
 
   // (RE)STARTS THE GAME
   function restart(){ 
@@ -125,7 +124,6 @@ $(document).ready(function () {
       deck = newDeck();
     }
     isFirstRound = false;
-    isGameOver = false;
     dealer.score = 0;
     dealer.cards = [];
     player.score = 0;
@@ -136,17 +134,18 @@ $(document).ready(function () {
     secondHand.cards= [];
     secondHand.result = undefined;
     secondHand.gameResult = undefined;
-    player.cards = [{
-      number: 3,
-      suit: 2,
-    }, {
-      number: 3,
-      suit: 3,
-    }];
-    player.score = score(player.cards);
-    ui(player);
-    // drawCard(player, 2);
-    drawCard(dealer, 2);
+    // player.cards = [{
+    //   number: 3,
+    //   suit: 2,
+    // }, {
+    //   number: 3,
+    //   suit: 3,
+    // }];
+    // player.score = score(player.cards);
+    // ui(player);
+    drawCard(player, 2);
+    drawCard(dealer, 1, true);
+    drawCard(dealer, 1, false);
     
     // Checks for split game
     if (player.cards[0].number === player.cards[1].number) {
@@ -177,9 +176,11 @@ $(document).ready(function () {
 
   // GAME PLAY
   // Draws a card, then updates score and UI
-  function drawCard(type, number = 1){
+  function drawCard(type, number = 1, isHidden = false){
     for (i = 0; i < number; i++) {
-      type.cards.push(removesRanCard(deck));
+      var randomCard = removesRanCard(deck);
+      randomCard.isHidden = isHidden;
+      type.cards.push(randomCard);
     }
     type.score = score(type.cards);
     ui(type);
@@ -188,7 +189,7 @@ $(document).ready(function () {
   // Dealer plays
   function dealerPlays(){
     while (dealer.score < 17) {
-      drawCard(dealer);
+      drawCard(dealer, 1, true);
     }
     if (isFirstRound) {
       updateResult(secondHand)
@@ -288,8 +289,7 @@ $(document).ready(function () {
     $('.player_result').addClass('is-hidden');
     $('.secondHand_result').addClass('is-hidden');
     $('.secondHand').addClass('is-hidden');
-    // $('.card').remove();
-    $('.dealer_score').addClass('is-hidden');
+    $('.dealer_score > .score_score').html('?');
     restart();
   });
 
@@ -347,16 +347,15 @@ $(document).ready(function () {
         suit = '♣';
       }
 
-      if (person.type === 'dealer' && i === 0 && !isGameOver){
+      if (person.cards[i].isHidden){
         cardUI += `
-        <div class='card-wrapper'>
-            <div class='card card-back'>
-            </div>
+        <div class='card-wrapper' data-index="${i}">
+            <div class='card card-back'></div>
           </div>
         `;
        } else {
         cardUI += `
-          <div class='card-wrapper'>
+          <div class='card-wrapper' data-index="${i}">
             <div class='card'>
               <span class="card_number">
                 ${icon}
@@ -373,19 +372,28 @@ $(document).ready(function () {
 
     $(`.${person.type}_cards`).html(cardUI);
 
-    $(`.${person.type}_score > .score_score`).html(person.score);
+    if (person.type === 'player' || person.type === 'secondHand') {
+      $(`.${person.type}_score > .score_score`).html(person.score);
+    }
   };
 
   // End of game UI
+  function dealerRevealsAll(){
+    for (i = 0; i < dealer.cards.length; i++) {
+      dealer.cards[i].isHidden = false;
+    }
+    ui(dealer);
+    $('.dealer_score > .score_score').html(dealer.score);
+  }
   function endGame(){
       $('.player_choice').addClass('is-hidden');
       $('.split').addClass('is-hidden');
-      $('.dealer_score').removeClass('is-hidden');
+      // $('.dealer_score').removeClass('is-hidden');
       $('.dealer_cards .card').css({'display': 'block'});
       $('.player_result').html(player.result).removeClass('is-hidden');
       $('.secondHand_choice').addClass('is-hidden');
       $('.secondHand_result').html(secondHand.result).removeClass('is-hidden');
-
+      dealerRevealsAll();
       if (player.gameResult === 'won' && (!secondHand.gameResult || secondHand.gameResult === 'drew')) {
         tally.player ++;
       } else if (player.gameResult === 'lost' && (!secondHand.gameResult || secondHand.gameResult === 'drew')) {
@@ -401,7 +409,6 @@ $(document).ready(function () {
       }
       $('.dealer_tally').html(tally.dealer);
       $('.player_tally').html(tally.player);
-      isGameOver = true;
   }
 
 });

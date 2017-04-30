@@ -1,7 +1,6 @@
 *,
 *:before,
 *:after {
-  border: 1px solid lightblue;
   box-sizing: border-box; }
 
 h2, h1 {
@@ -73,10 +72,11 @@ body {
 
 .card {
   background-color: #FBF4F0;
+  border: 17px solid #FBF4F0;
   color: #151413;
   display: block;
   height: 0;
-  padding-bottom: 140%;
+  padding-bottom: 120%;
   width: 100%;
   margin: 1rem 0;
   border-radius: 0.5rem;
@@ -85,20 +85,20 @@ body {
   font-family: fira-mono, monospace;
   font-size: 1.5rem; }
   .card .card_number {
+    font-weight: 700;
     position: absolute;
     top: 0;
-    right: 0;
-    padding: 1rem; }
+    right: 0; }
   .card .card_number--duplicate {
+    font-weight: 700;
     position: absolute;
-    padding: 1rem;
     bottom: 0;
     left: 0;
     -webkit-transform: rotate(180deg);
             transform: rotate(180deg); }
   .card .card_suit {
     position: absolute;
-    font-size: 2.2rem;
+    font-size: 3rem;
     display: block;
     left: 50%;
     top: 50%;
@@ -138,9 +138,8 @@ body {
 
 .dealer_cards .card-wrapper {
   display: block; }
-  .dealer_cards .card-wrapper:nth-child(n+3) {
-    display: none; }
 
 .card-back {
-  background-color: red; }
+  background: -webkit-repeating-linear-gradient(45deg, #151413, #151413 2px, #FBF4F0 2px, #FBF4F0 10px);
+  background: repeating-linear-gradient(45deg, #151413, #151413 2px, #FBF4F0 2px, #FBF4F0 10px); }
 /*# sourceMappingURL=style.css.map */
