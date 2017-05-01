@@ -269,7 +269,9 @@ $(document).ready(function () {
     isFirstRound = false;
     hit(player);
     $('.player_choice').removeClass('is-hidden');
-    $(".secondHand_choice").addClass("is-hidden");
+    $('.secondHand_choice').addClass("is-hidden");
+    $('.secondHand').addClass('is-inactive');
+    $('.player').removeClass('is-inactive');
   }
 
 // ON CLICK UI
@@ -283,13 +285,17 @@ $(document).ready(function () {
     }
   });
 
-  $('.retry').click(function(e){
+ // Restart the game UI
+  $('.deal_button').click(function(e){
+    $('.notification').addClass('is-hidden');
     $('.secondHand_choice').addClass('is-hidden');
     $('.player_choice').removeClass('is-hidden');
     $('.player_result').addClass('is-hidden');
     $('.secondHand_result').addClass('is-hidden');
     $('.secondHand').addClass('is-hidden');
-    $('.dealer_score > .score_score').html('?');
+    $('.player').removeClass('is-inactive');
+    $('.secondHand').removeClass('is-inactive');
+    $('.dealer_score > .score_score').html('<span class="score-push">?<span>');
     restart();
   });
 
@@ -314,8 +320,18 @@ $(document).ready(function () {
       $('.split').addClass('is-hidden');
       splitGame();
       $(".secondHand").removeClass('is-hidden');
+      $(".player").addClass('is-inactive');
   });
 
+  $('.reset').click(function(e){
+      e.preventDefault();
+      tally = {
+        player: 0,
+        dealer: 0,
+      }
+      $('.dealer_tally').html(tally.dealer);
+      $('.player_tally').html(tally.player);
+  });
   // Generates HTML
   function ui(person){
       // $(`.${person.type}_score > .score_score`).remove();
@@ -373,7 +389,14 @@ $(document).ready(function () {
     $(`.${person.type}_cards`).html(cardUI);
 
     if (person.type === 'player' || person.type === 'secondHand') {
-      $(`.${person.type}_score > .score_score`).html(person.score);
+
+      var scoreText = person.score;
+
+      if (scoreText < 9) {
+        scoreText = `0${scoreText}`; // Not always working
+      }
+
+      $(`.${person.type}_score > .score_score`).html(scoreText);
     }
   };
 
@@ -383,13 +406,36 @@ $(document).ready(function () {
       dealer.cards[i].isHidden = false;
     }
     ui(dealer);
-    $('.dealer_score > .score_score').html(dealer.score);
+
+    var scoreText = dealer.score;
+
+    if (scoreText < 9) {
+        scoreText = `0${scoreText}`;
+    }
+
+    $('.dealer_score > .score_score').html(scoreText);
   }
+
   function endGame(){
+      $('.player').removeClass('is-inactive');
+      $('.secondHand').removeClass('is-inactive');
       $('.player_choice').addClass('is-hidden');
       $('.split').addClass('is-hidden');
       // $('.dealer_score').removeClass('is-hidden');
       $('.dealer_cards .card').css({'display': 'block'});
+      
+      var notification = '';;
+      if(secondHand.result) {
+        if(secondHand.gameResult === player.gameResult) {
+          notification += `You ${secondHand.gameResult} the 1st hand & 2nd hand.`;
+        } else {
+          notification += `You ${secondHand.gameResult} the 1st hand & ${player.gameResult} the 2nd hand.`;
+        }
+      } else {
+        notification = player.result;
+      }
+      $('.notification').html(notification).removeClass('is-hidden');
+
       $('.player_result').html(player.result).removeClass('is-hidden');
       $('.secondHand_choice').addClass('is-hidden');
       $('.secondHand_result').html(secondHand.result).removeClass('is-hidden');

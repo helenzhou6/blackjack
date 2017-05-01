@@ -8,93 +8,108 @@
   <script src="https://use.typekit.net/src7rxu.js"></script>
   <script src="https://use.typekit.net/src7rxu.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <title>Blackjack</title>
 </head>
 
 <body>
-  <div class="heading">
-    <h1 class="title">./blackjack</h1>
-    <span class="title_subtext">./how_to_play</span>
-  </div>
-  <div class="margin">
+
+  <div class="margin clearfix">
+    <div class="heading clearfix">
+      <div class="heading_text">
+        <h1 class="title dotSlash">Blackjack</h1>
+        <span class="title_subtext dotSlash">How_to_play</span>
+      </div>
+      <button class="reset reset2 dotSlash">Reset_tally</button>
+    </div>
 
     <div class="tally clearfix">
       <div>Tally</div>
-      <div class="tally_section">Dealer_
+      <div class="tally__wrapper">
+        <div class="tally_section">
+          <span class="underscore">Dealer</span>
           <div class='dealer_tally'>0</div>
-      </div>
-      <div class="tally_separator">vs</div>
-      <div class="tally_section">Player_
-        <div class='player_tally'>0</div>
-      </div>
-    </div>
-
-<!--         <div class="tally clearfix">
-      <div>Tally</div>
-      <div class="tally_section">Dealer_
-          <div class='dealer_tally'>0</div>
-      </div>
-      <div class="tally_separator">vs</div>
-      <div class="tally_section">Player_
-        <div class='player_tally'>0</div>
-      </div>
-    </div> -->
-
-    <div class="dealer">
-      <div class="player_stats">
-        <h2>dealer_</h2>
-        <div class="dealer_score score">
-          <span class="score_text">score:</span>
-          <span class="score_score">?</span>
+        </div>
+        <div class="tally_separator">vs</div>
+        <div class="tally_section">
+          <span class="underscore">Player</span>
+          <div class='player_tally'>0</div>
         </div>
       </div>
-      <div class="dealer_cards row clearfix"></div>
     </div>
+    <button class="reset dotSlash">Reset_tally</button>
 
-    <div class="secondHand is-hidden">
-      <div class="player_stats">
-        <h2>second_hand_</h2>
-        <div class="secondHand_score">
-          <span class="score_text">score:</span>
-          <span class="score_score"></span>
+    <!-- <hr> -->
+
+    <div class="content">
+      <div class="dealer clearfix">
+        <div class="player_stats">
+          <h2 class="underscore">Dealer</h2>
+          <div class="dealer_score score">
+            <span class="score_text">Score:</span>
+            <span class="score_score"><span class="score-push">?</span></span>
+          </div>
         </div>
+        <div class="dealer_cards row clearfix"></div>
       </div>
-      <div class="secondHand_cards row clearfix"></div>
+
+      <div class="secondHand clearfix is-hidden">
+        <div class="player_stats">
+          <h2 class="underscore">1st_hand</h2>
+          <div class="secondHand_score score">
+            <span class="score_text">Score:</span>
+            <span class="score_score"></span>
+          </div>
+        </div>
+        <div class="secondHand_cards row clearfix"></div>
+        
+        <div class="secondHand_choice is-hidden">
+          <button class="hit dotSlash">Hit</button>
+          <button class="stand dotSlash">Stand</button>
+        </div>
+        <div class="secondHand_result message is-hidden"></div>
+      </div>
       
-      <div class="secondHand_choice is-hidden">
-        <button class="hit">Hit</button>
-        <button class="stand">Stand</button>
-      </div>
-      <div class="secondHand_result is-hidden"></div>
-    </div>
-    
-    <div class="player">
-      <div class="player_stats">
-        <h2>player_</h2>
-        <div class="player_score score">
-          <span class="score_text">score:</span>
-          <span class="score_score"></span>
+      <div class="player clearfix">
+        <div class="player_stats">
+          <h2 class="underscore">Player</h2>
+          <div class="player_score score">
+            <span class="score_text">Score:</span>
+            <span class="score_score"></span>
+          </div>
         </div>
+
+        <div class="player_cards row"></div>
+        
+        <div class="player_choice">
+          <button class="hit dotSlash">Hit</button>
+          <button class="stand dotSlash">Stand</button>
+        </div>
+        <div class="player_result message is-hidden"></div>
       </div>
 
-      <div class="player_cards row clearfix"></div>
-      
-      <div class="player_choice">
-        <button class="hit">Hit</button>
-        <button class="stand">Stand</button>
+      <div class="split is-hidden"><span class="message">Would you like to split the hand?</span>
+        <button class="split-button--yes dotSlash">Yes</button>
+        <button class="split-button--no dotSlash">No</button>
       </div>
-      <div class="player_result is-hidden"></div>
+
+      <div class="deal">
+        <button class="deal_button dotSlash">Deal_again</button>
+      </div>
     </div>
 
-    <div class="split is-hidden">
-      <span>Would you like to split the hand?</span>
-      <button class="split-button--yes">Yes</button>
-      <button class="split-button--no">No</button>
+    <div class="footer">
+      <span>© Made by Helen Zhou 2017</span>
+      <div class="heading2">
+        <h1 class="title dotSlash">Blackjack</h1>
+        <span class="title_subtext dotSlash">How_to_play</span>
+      </div>
     </div>
-
-    <button class="retry">Restart</button>
-
   </div>
+
+  <div class="notification is-hidden"></div>
+
 
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
   <script src="jquery.js"></script>

@@ -20,44 +20,101 @@ body {
   background-color: #151413;
   color: #FBF4F0;
   font-family: nimbus-sans, sans-serif;
-  margin: 1rem; }
+  min-height: 100vh; }
 
 .margin {
-  margin: 0 auto;
-  width: 80%; }
+  padding: 1rem; }
+  @media (min-width: 768px) {
+    .margin {
+      padding: 2rem; } }
 
-.heading .title_subtext {
-  -webkit-transform: rotate(-90deg) translateX(-100%);
-          transform: rotate(-90deg) translateX(-100%);
+.heading .title_subtext, .heading2 .title_subtext {
+  transform: rotate(-90deg) translateX(-100%);
   font-family: fira-mono, monospace;
   letter-spacing: 2.5px;
-  font-size: 0.75em;
+  font-size: 0.75rem;
   display: inline-block;
-  -webkit-transform-origin: top left;
-          transform-origin: top left; }
+  transform-origin: top left; }
 
-.heading .title {
+.heading .title, .heading2 .title {
+  margin-top: -5px;
   font-size: 3rem; }
 
+.heading_text {
+  float: left; }
+
+.heading2 {
+  display: none; }
+  @media (min-width: 768px) {
+    .heading2 {
+      transform: rotate(-180deg) translateY(100%);
+      transform-origin: bottom center;
+      display: block;
+      margin-left: auto; } }
+
+.dotSlash {
+  text-transform: lowercase; }
+  .dotSlash:before {
+    content: './'; }
+
+.underscore {
+  text-transform: lowercase; }
+  .underscore:after {
+    content: '_'; }
+
+@media (min-width: 768px) {
+  .content {
+    margin: 0 auto 1rem auto;
+    width: 78%; }
+    .content:before {
+      height: 1px;
+      width: 110%;
+      display: block;
+      content: '';
+      background-color: #FBF4F0;
+      margin-left: -5%;
+      margin-bottom: 1rem; } }
+
 .tally {
+  clear: both;
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 2.5px;
   max-width: 9rem;
-  margin: 2rem auto 3rem auto;
+  margin: 5rem auto 3rem auto;
   text-align: center; }
   .tally .tally_section {
-    margin-top: 0.8rem;
+    margin-top: 0.5rem;
     float: left;
     width: 42%; }
   .tally .tally_separator {
     text-transform: lowercase;
-    margin-top: 0.8rem;
     width: 16%;
-    float: left; }
+    margin-bottom: 10px; }
+  .tally .tally__wrapper {
+    display: flex;
+    align-items: flex-end; }
+  .tally .dealer_tally, .tally .player_tally {
+    letter-spacing: -2.5px;
+    margin-right: 5px;
+    font-size: 2rem; }
+  @media (min-width: 768px) {
+    .tally {
+      margin-top: 0;
+      margin-bottom: 1rem; } }
 
-.dealer_tally, .player_tally {
-  font-size: 2rem; }
+.reset {
+  margin-bottom: 3rem; }
+  @media (min-width: 768px) {
+    .reset {
+      display: none; } }
+
+.reset2 {
+  display: none; }
+  @media (min-width: 768px) {
+    .reset2 {
+      display: block;
+      float: right; } }
 
 .row {
   margin-left: -0.5rem;
@@ -67,23 +124,35 @@ body {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
   width: 50%;
-  max-width: 10rem;
+  max-width: 6rem;
+  flex-basis: 6rem;
   float: left; }
+  @media (min-width: 768px) {
+    .card-wrapper {
+      width: 8rem;
+      flex-basis: 8rem;
+      max-width: 8rem;
+      padding-left: 1rem;
+      padding-right: 0; } }
 
 .card {
   background-color: #FBF4F0;
-  border: 17px solid #FBF4F0;
+  border: 8px solid #FBF4F0;
   color: #151413;
   display: block;
   height: 0;
-  padding-bottom: 120%;
+  padding-bottom: 140%;
   width: 100%;
   margin: 1rem 0;
-  border-radius: 0.5rem;
+  border-radius: 0.4rem;
   margin-right: 1rem;
   position: relative;
   font-family: fira-mono, monospace;
-  font-size: 1.5rem; }
+  font-size: 1.3rem; }
+  @media (min-width: 768px) {
+    .card {
+      font-size: 1.5rem;
+      border: 11px solid #FBF4F0; } }
   .card .card_number {
     font-weight: 700;
     position: absolute;
@@ -94,41 +163,110 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
-    -webkit-transform: rotate(180deg);
-            transform: rotate(180deg); }
+    transform: rotate(180deg); }
   .card .card_suit {
     position: absolute;
-    font-size: 3rem;
+    font-size: 2rem;
     display: block;
     left: 50%;
     top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%); }
+    transform: translate(-50%, -50%); }
+    @media (min-width: 768px) {
+      .card .card_suit {
+        font-size: 2.4rem; } }
+
+.is-inactive {
+  opacity: 0.5; }
+
+.notification {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 1rem;
+  margin: 0;
+  color: #151413;
+  background-color: #FBF4F0;
+  font-family: fira-mono, monospace;
+  letter-spacing: 2.5px;
+  text-align: center; }
 
 .player_stats {
-  display: inline-block; }
+  display: block;
+  text-align: center; }
+  @media (min-width: 768px) {
+    .player_stats {
+      float: left;
+      margin: 1rem 0rem calc(3rem - 10px) 0rem;
+      text-align: left;
+      width: 9rem;
+      height: calc(9.8rem + 16px);
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-between; } }
 
-.score {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: baseline;
-      -ms-flex-align: baseline;
-          align-items: baseline; }
+button {
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #FBF4F0;
+  appearance: none;
+  width: 100%;
+  color: #FBF4F0;
+  padding: 0.8rem 0;
+  font-family: fira-mono, monospace;
+  letter-spacing: 2.5px;
+  margin-bottom: 1rem; }
+  button:focus {
+    outline: 1px solid #FBF4F0;
+    background-color: rgba(251, 244, 240, 0.1); }
+  @media (min-width: 768px) {
+    button {
+      width: 15rem; } }
+
+@media (min-width: 768px) {
+  .hit {
+    margin-right: 1rem; } }
+
+.deal {
+  margin-top: 2rem; }
+  @media (min-width: 768px) {
+    .deal {
+      margin-bottom: 1rem; } }
+
+.message {
+  font-family: fira-mono, monospace;
+  letter-spacing: 2.5px;
+  display: block;
+  text-align: center; }
+  @media (min-width: 768px) {
+    .message {
+      margin-left: 10.5rem;
+      text-align: left; } }
 
 .score_score {
-  font-size: 4rem;
+  font-size: 3.5rem;
   letter-spacing: -2.5px;
   margin-left: auto;
-  margin-top: 0.2rem; }
+  margin-top: 0.2rem;
+  font-weight: 700; }
 
 .score_text {
+  margin-right: 0.5rem;
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 2.5px; }
 
-.dealer {
-  margin-bottom: 1rem; }
+.footer {
+  display: flex;
+  align-items: flex-end;
+  text-transform: uppercase;
+  font-size: 0.4rem;
+  letter-spacing: 2.5px; }
+
+.score-push {
+  margin-left: 1ch; }
 
 .is-hidden {
   display: none; }
@@ -136,10 +274,37 @@ body {
 .is-invisible {
   visibility: hidden; }
 
+.dealer_cards,
+.player_cards,
+.secondHand_cards {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; }
+  .dealer_cards > *,
+  .player_cards > *,
+  .secondHand_cards > * {
+    flex-grow: 0;
+    flex-shrink: 0; }
+  @media (min-width: 768px) {
+    .dealer_cards,
+    .player_cards,
+    .secondHand_cards {
+      float: right;
+      width: calc(100% - 9rem);
+      justify-content: left; } }
+
+.dealer, .player, .secondHand {
+  margin-bottom: 0.8rem; }
+
+@media (min-width: 768px) {
+  .dealer {
+    margin-bottom: 0; } }
+
 .dealer_cards .card-wrapper {
   display: block; }
 
 .card-back {
-  background: -webkit-repeating-linear-gradient(45deg, #151413, #151413 2px, #FBF4F0 2px, #FBF4F0 10px);
   background: repeating-linear-gradient(45deg, #151413, #151413 2px, #FBF4F0 2px, #FBF4F0 10px); }
+
 /*# sourceMappingURL=style.css.map */
