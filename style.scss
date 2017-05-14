@@ -14,7 +14,12 @@ $background: #151413;
   box-sizing: border-box;
 }
 
-h2, h1 {
+html {
+	@include media(1700px){
+		font-size: calc(1rem + 0.3vw);
+	}
+}
+h2, h1, h3 {
 	margin: 0;
 	font-weight: 400;
 }
@@ -34,50 +39,71 @@ body {
 	background-color: $background;
 	color: $color;
 	font-family: nimbus-sans, sans-serif;
-	min-height: 100vh;
+	position: relative;
 }
 
-.margin {
-	padding: 1rem; // change once larger
-	// padding-bottom: 10rem;
-	// position: relative;
+// BUTTONS
+button {
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid $color;
+    appearance: none;
+    width: 100%;
+    color: $color;
+    padding: 0.8rem 0;
+    font-family: fira-mono, monospace;
+    // letter-spacing: 2.5px;
+    margin-bottom: 1rem;
+
+    &:focus {
+    	outline: 1px solid $color;
+    	background-color: rgba(251, 244, 240, .1)
+    }
+
+	@include media(768px) {
+		width: 12rem;
+	}
+}
+
+.hit, .split-button-yes {
+	@include media(768px) {
+		margin-right: 1rem;
+	}
+}
+
+// CONTENT WRAPPERS
+main {
+	flex-grow: 1;
+
+	@include media(1000px) {
+		display: flex;
+		max-width: 70rem;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	// @include media(2000px)
+	// flex-grow: 0;
+}
+
+.margin-wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	padding: 1rem;
+
 	@include media(768px) {
 		padding: 2rem;
 	}
-}
-
-.heading, .heading2 {
-	// position: relative;
-	// margin: 1rem;
-	.title_subtext {
-		transform: rotate(-90deg) translateX(-100%);
-		font-family: fira-mono, monospace;
-		letter-spacing: 2.5px;
-		font-size: 0.75rem;
-		display: inline-block;
-		transform-origin: top left;
-	}
-	.title {
-		margin-top: -5px;
-		font-size: 3rem;
-	}
-}
-
-.heading_text {
-	float: left;
-}
-
-.heading2 {
-	display: none;
-	@include media(768px) {
-		transform: rotate(-180deg) translateY(100%);
-		transform-origin: bottom center;
+	@include media(1000px) {
 		display: block;
-		margin-left: auto;
+		flex-direction: row;
+		// padding: 2rem;
 	}
-
 }
 
+// AESTHETIC
 .dotSlash {
 	text-transform: lowercase;
 	&:before {
@@ -92,10 +118,200 @@ body {
 	}
 }
 
+sup {
+	font-size: 0.8rem;
+	top: -1.2em;
+}
+
+.charac-push {
+	margin-left: 1ch;
+}
+
+// RESET BUTTON
+.reset-one {
+	margin-bottom: 3rem;
+
+	@include media(768px) {
+		display: none;
+	}
+}
+
+.reset-two {
+	display: none;
+
+	@include media(768px) {
+		display: block;
+		float: right;
+	}
+
+	@include media(1000px) {
+		position: fixed;
+		right: 2rem;
+		top: 2rem;
+	}
+}
+
+// HEADING
+.heading {
+	@include media(1000px) {
+		height: 4.5rem;
+	}
+}
+
+.heading__title {
+	cursor: pointer;
+	margin-top: -5px;
+	font-size: 3rem;
+}
+
+.heading__subtext {
+	transform: rotate(-90deg) translateX(-100%);
+	font-family: fira-mono, monospace;
+	// letter-spacing: 2.5px;
+	line-height: 1.5rem;
+	font-size: 0.75rem;
+	display: inline-block;
+	transform-origin: top left;
+	cursor: pointer;
+}
+
+.heading__text {
+	float: left;
+	position: relative;
+	z-index: 103;
+}
+
+.heading-alt {
+	display: none;
+
+	@include media(768px) {
+		transform: rotate(-180deg) translateY(100%);
+		transform-origin: bottom center;
+		display: block;
+		margin-left: auto;
+		position: relative;
+		z-index: 200;
+	}
+
+	@include media(1000px) {
+		position: fixed;
+		right: 2rem;
+		bottom: 1.84rem;
+	}
+}
+
+.heading-main {
+	@include media(1000px) {
+		position: fixed;
+		left: 2rem;
+		top: 1.84rem;
+	}
+}
+
+// TALLY
+
+.tally {
+	clear: both;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	letter-spacing: 0.15rem;
+	max-width: 9rem;
+	margin: 2.5rem auto 3rem auto;
+	text-align: center;
+
+	@include media(768px) {
+		margin-top: 3rem;
+		margin-bottom: 2.5rem;
+	}
+
+	@include media(1000px) {
+		max-width: none;
+		min-width: 14em;
+		text-align: right;
+		margin: 9.5rem 0 0; // is not correct
+		display: block;
+		position: relative;
+	}
+}
+
+.dealer__tally, .player__tally {
+	letter-spacing: -0.16rem;
+	margin-right: 0.31rem;
+	font-size: 2rem;
+
+	@include media(1000px) {
+		margin-right: 0;
+	}
+}
+
+.tally__section {
+	margin-top: 0.5rem;
+	float: left;
+	width: 42%;
+
+	@include media(1000px) {
+		width: 100%;
+		margin: 0;
+		float: none;
+	}
+}
+
+.tally__separator {
+	text-transform: lowercase;
+	width: 16%;
+	margin-bottom: 0.63rem;
+
+	@include media(1000px) {
+		width: 100%;
+		margin: 0;
+		float: none;
+		margin: 1.2rem -2.5px 1.2rem 0;
+		text-align: right;
+		display: inline-block; //Not sure why this works but not block
+	}
+}
+
+.tally__wrapper {
+	display: flex;
+	align-items: flex-end;
+	position: relative;
+	flex-wrap: wrap;
+
+	@include media(1000px) {
+		flex-wrap: no-wrap;
+		display: block;
+		padding-right: 3rem;
+	}
+}
+
+.tally__title {
+	text-align: center;
+	font-size: 0.75rem;
+	letter-spacing: 0.16rem;
+	width: 100%;
+
+	@include media(1000px) {
+		// font-size: 0.4rem;
+		width: auto;
+		margin: 0;
+		position: absolute;
+	    transform: translate(100%, -50%) rotate(270deg);
+	    top: 50%;
+	}
+}
+
+.tally__label {
+	@include media(1000px) {
+		display: none;
+	}
+}
+
+// CONTENT = cards section
+
 .content {
 	@include media(768px) {
 		margin: 0 auto 1rem auto;
-		width: 78%;
+		width: 90%;
 
 		&:before {
 			height: 1px;
@@ -104,161 +320,231 @@ body {
 			content: '';
 			background-color: $color;
 			margin-left: -5%;
+			margin-bottom: 2rem;
+		}
+	}
+	@include media(1000px) {
+		width: auto;
+		margin: 1rem;
+		// flex-grow: 1;
+		border-left: 1px solid $color;
+		padding-left: 2rem;
+
+		&:before {
+			display: none;
 			margin-bottom: 1rem;
 		}
 	}
+
+	@include media(2000px){
+		// flex-grow: 0;
+	}
 }
 
-hr {
-	// border: 0.1px solid $color;
-	// margin-left: 2.5rem;
-	// margin-right: 2.5rem;
-}
-
-.tally {
-	clear: both;
-	text-transform: uppercase;
-	font-size: 0.75rem;
-	letter-spacing: 2.5px;
-	max-width: 9rem;
-	margin: 5rem auto 3rem auto;
-	text-align: center;
-
-	.tally_section {
-		margin-top: 0.5rem;
-		float: left;
-		width: 42%;
-	}
-	.tally_separator {
-		text-transform: lowercase;
-		width: 16%;
-		margin-bottom: 10px;
-	}
-	.tally__wrapper {
-		display: flex;
-		align-items: flex-end;
-	}
-
-	.dealer_tally, .player_tally {
-		letter-spacing: -2.5px;
-		margin-right: 5px;
-		font-size: 2rem;
-	}
+.secondHand__choice, .player__choice, .player__result, .secondHand__result, .deal__button, .split {
+	margin-bottom: 1rem;
+	// margin-top: 2rem;
 	@include media(768px) {
-		margin-top: 0;
-		margin-bottom: 1rem;
+		// display: flex;
+		// justify-content: center;
+		margin-left: 10.5rem;
+
+	}
+	@include media(1000px) {
+		// display: block;
+		// margin-left: 11rem;
+		// margin-bottom: 0;
+	}
+
+}
+
+.secondHand__choice, .split, .player__choice, .player__result, .secondHand__result {
+	margin-top: 1rem;
+	// margin-bottom: 1rem;
+
+	@include media(768px) {
+		margin-top: 1.5rem;
 	}
 }
 
-.reset {
-	margin-bottom: 3rem;
+.split__message {
+	margin-bottom: 1rem;
+}
+
+.person {
+	margin-top: 0.8rem;
+	margin-bottom: 0.8rem;
+	@include media(1000px) {
+		margin-bottom: 0;
+	}
+	// @include media(768px) {
+	// 	margin-bottom: 2rem;
+	// 	margin-top: 2rem;
+	// }
+}
+
+.player {
+	margin-top: 2rem; 
+}
+.dealer {
+	margin-bottom: 2rem;
 	@include media(768px) {
-		display: none;
+		margin-top: 3.5rem;
+	}
+	@include media(1000px) {
+		margin-top: 1.5rem;
 	}
 }
 
-.reset2 {
-	display: none;
+.cards {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+
+	> * {
+		flex-grow: 0;
+		flex-shrink: 0;
+	}
+
 	@include media(768px) {
-		display: block;
 		float: right;
+		width: calc(100% - 9rem);
+		justify-content: left;
+	}
+	@include media(1000px) {
+		width: auto;
+		float: left;
 	}
 }
 
 .row {
 	margin-left: -0.5rem;
 	margin-right: -0.5rem;
+	@include media(1000px) {
+		margin-left: 0.5rem;
+	}
 }
+
+// Specific cards
 
 .card-wrapper {
 	padding-right: 0.5rem;
 	padding-left: 0.5rem;
 	width: 50%;
-	max-width: 6rem; // change to 10 on desktop
+	max-width: 6rem;
 	flex-basis: 6rem;
 	float: left;
 
 	@include media(768px) {
-		width: 8rem;
-		flex-basis: 8rem;
-		max-width: 8rem;
-		padding-left: 1rem;
+		width: 7.4rem;
+		flex-basis: 7.4rem;
+		max-width: 7.4rem;
+		padding-left: 0.8rem;
 		padding-right: 0;
 	}
 }
 
 .card {
   background-color: $color;
-  border: 8px solid $color; // change to border: 17px solid $color; at desktop
+  border: 0.5rem solid $color;
   color: $background;
   display: block;
   height: 0;
   padding-bottom: 140%;
   width: 100%;
-  margin: 1rem 0;
-  border-radius: 0.4rem; //   border-radius: 0.5rem; on desktop
+  margin-bottom: 1rem;
+  border-radius: 0.4rem;
   margin-right: 1rem;
   position: relative;
   font-family: fira-mono, monospace;
-  font-size: 1.3rem; // change to font-size: 1.5rem; on desktop
+  font-size: 1.3rem;
+  // position: relative;
 
   @include media(768px) {
-  	font-size: 1.5rem;
-  	border: 11px solid $color;
+  	font-size: 1.4rem;
+  	border: 0.7rem solid $color;
   }
-	  .card_number {
-	  	font-weight: 700;
-	  	position: absolute;
-	  	top: 0;
-	  	right: 0;
-	  }
+}
 
-	.card_number--duplicate {
-		font-weight: 700;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		transform: rotate(180deg);
-	}
-	.card_suit {
-		position: absolute;
-		font-size: 2rem; // desktop font-size: 3rem;
+.card--placeholder {
+	background-color: $background;
+  	border: 0.5rem solid $background;
+
+
+  @include media(768px) {
+  	font-size: 1.4rem;
+  	border: 0.7rem solid $background;
+  }
+
+	&:before {
 		display: block;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
+		content: '';
+		position: absolute;
+		top: -0.4rem;
+		bottom: -0.4rem;
+		right: -0.4rem;
+		left: -0.4rem;
+		border: 0.1rem dashed $color;
+		border-radius: 0.4rem;
+
 		@include media(768px) {
-		  	font-size: 2.4rem;
+			top: -0.6rem;
+			bottom: -0.6rem;
+			right: -0.6rem;
+			left: -0.6rem;
 		}
 	}
 }
 
-.is-inactive {
-	opacity: 0.5;
+.card__number {
+	font-weight: 700;
+	position: absolute;
 }
 
-.notification {
-	position: fixed;
+.card__number--top {
 	top: 0;
 	right: 0;
+}
+
+.card__number--bottom {
+	bottom: 0;
 	left: 0;
-	padding: 1rem;
-	margin: 0;
-	color: $background;
-	background-color: $color;
-	font-family: fira-mono, monospace;
-    letter-spacing: 2.5px;
-    text-align: center;
+	transform: rotate(180deg);
+}
+
+.card__suit {
+	position: absolute;
+	font-size: 2rem; // desktop font-size: 3rem;
+	display: block;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+
+	@include media(768px) {
+	  	font-size: 2.4rem;
+	}
+}
+
+.card--back {
+	background: repeating-linear-gradient(
+	  45deg,
+	  $background,
+	  $background 2px,
+	  $color 2px,
+	  $color 10px
+	);
 }
 
 // SCORE
-.player_stats {
+
+.player__stats {
 	display: block;
 	text-align: center;
-
+	margin-bottom: 1.5rem;
 	@include media(768px) {
 		float: left;
-		margin: 1rem 0rem calc(3rem - 10px) 0rem;
+		margin-bottom: 0;
+		// margin: 1rem 1rem calc(3rem - 10px) 0rem;
 		text-align: left;
 		width: 9rem;
 		height: calc(9.8rem + 16px);
@@ -269,99 +555,152 @@ hr {
 	}
 }
 
-.score {
-	// width: 10rem;
-	// display: flex;
-	// align-items: baseline;
-	// display: inline-block;
-}
-
-button {
-    padding: 0;
-    cursor: pointer;
-    background-color: transparent;
-    border: 1px solid $color;
-    appearance: none;
-    width: 100%;
-    color: $color;
-    padding: 0.8rem 0;
-    font-family: fira-mono, monospace;
-    letter-spacing: 2.5px;
-    margin-bottom: 1rem;
-
-    &:focus {
-    	outline: 1px solid $color;
-    	background-color: rgba(251, 244, 240, .1)
-    }
-
-	@include media(768px) {
-		width: 15rem;
-	}
-}
-
-.hit {
-	@include media(768px) {
-		margin-right: 1rem;
-		// margin-left: 10.5rem;
-	}
-}
-
-.deal {
-	margin-top: 2rem;
-	@include media(768px) {
-		// margin-left: 10.5rem;
-		margin-bottom: 1rem;
-	}
-}
-
-.stand {
-	@include media(768px) {
-		// margin-left: 10.5rem;
-	}
-}
-
-.message {
-	font-family: fira-mono, monospace;
-    letter-spacing: 2.5px;
-    display: block;
-    text-align: center;
-	@include media(768px) {
-		margin-left: 10.5rem;
-		text-align: left;
-	}
-    // font-size: 1.5rem;
-    // font-weight: 700;
-    // margin: 1rem;
-}
-
-.score_score {
+.score__number {
 	font-size: 3.5rem;
-	letter-spacing: -2.5px;
+	letter-spacing: -0.16rem;
 	margin-left: auto;
 	margin-top: 0.2rem;
 	font-weight: 700;
-
-	@include media(768px) {
-		// margin-left: 1rem;
-	}
 }
-.score_text {
+.score__text {
 	margin-right: 0.5rem;
 	text-transform: uppercase;
 	font-size: 0.75rem;
-	letter-spacing: 2.5px;
+	letter-spacing: 0.16rem;
 }
 
+// Player messages
+.message {
+	font-family: fira-mono, monospace;
+    // letter-spacing: 2.5px;
+    display: block;
+    text-align: center;
+
+	@include media(768px) {
+		text-align: left;
+	}
+}
+
+// NOTIFICATION
+.notification {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	padding: 1rem;
+	margin: 0;
+	z-index: 10000;
+	color: $background;
+	background-color: $color;
+	font-family: fira-mono, monospace;
+    // letter-spacing: 2.5px;
+    text-align: center;
+
+    @include media(768px) {
+    	bottom: 0;
+    	top: auto;
+    }
+}
+
+// FOOTER
 .footer {
 	display: flex;
 	align-items: flex-end;
-	text-transform: uppercase;
-	font-size: 0.4rem;
-	letter-spacing: 2.5px;
+	width: 100%;
+
+	@include media(1000px) {
+		position: fixed;
+		left: 2rem;
+		bottom: 2rem;
+		z-index: 100;
+	}
 }
 
-.score-push {
-	margin-left: 1ch;
+.footer__text {
+	text-transform: uppercase;
+	font-size: 0.4rem;
+	letter-spacing: 0.16rem;
+	position: relative;
+	z-index: 200;
+
+
+}
+
+// How to play
+p {
+	font-family: fira-mono, monospace;
+    line-height: 1.44rem;
+}
+
+.modal__title {
+	font-size: 2.5rem;
+}
+
+.modal__text {
+
+}
+
+.modal {
+	background-color: $color;
+	color: $background;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	overflow: auto;
+	z-index: 10;
+}
+
+.heading__close {
+	color: $background;
+	border-color: $background;
+	position: relative;
+	z-index: 300;
+	display: none;
+
+	@include media(768px) {
+		display: block;
+		float: right;
+	}
+	@include media(1000px) {
+		position: fixed;
+		right: 2rem;
+		top: 2rem;
+	}
+}
+
+.modal__content {
+	padding: 3rem;
+	margin: 9rem auto 2rem auto;
+	max-width: 35rem;
+
+	@include media(768px) {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	@include media(1000px) {
+		margin-left: calc(15% + 4rem);
+		margin-right: 4rem;
+		margin-top: 12rem;
+	}
+}
+
+.modal__close {
+	color: $background;
+	border-color: $background;
+	width: 100%;
+	margin-top: 2rem;
+
+	@include media(768px) {
+		display: none;
+	}
+}
+
+// UTILITY
+.is-inactive {
+	opacity: 0.5;
 }
 
 .is-hidden {
@@ -372,49 +711,11 @@ button {
   visibility: hidden;
 }
 
-.dealer_cards,
-.player_cards,
-.secondHand_cards {
-	margin-bottom: 2rem;
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-
-	> * {
-		flex-grow: 0;
-		flex-shrink: 0;
-	}
-
-
-	@include media(768px) {
-		float: right;
-		width: calc(100% - 9rem);
-		// margin-left: 1rem;
-		justify-content: left;
-	}
+.is-unscrollable {
+	overflow: hidden;
+	// min-height: 100vh;
 }
 
-.dealer, .player, .secondHand {
-	margin-bottom: 0.8rem;
-}
-
-.dealer {
-	@include media(768px) {
-		margin-bottom: 0;
-	}
-}
-
-.dealer_cards .card-wrapper {
-  display: block;
-}
-
-.card-back {
-	// background-color: lightblue;
-	background: repeating-linear-gradient(
-	  45deg,
-	  $background,
-	  $background 2px,
-	  $color 2px,
-	  $color 10px
-	);
+.textColor {
+	color: $background;
 }

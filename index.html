@@ -15,100 +15,143 @@
 
 <body>
 
-  <div class="margin clearfix">
+  <div class="margin-wrapper clearfix">
+
     <div class="heading clearfix">
-      <div class="heading_text">
-        <h1 class="title dotSlash">Blackjack</h1>
-        <span class="title_subtext dotSlash">How_to_play</span>
+      <div class="heading-main heading__text">
+        <h1 class="heading__title dotSlash">Blackjack</h1>
+        <span class="heading__subtext dotSlash">How_to_play</span>
       </div>
-      <button class="reset reset2 dotSlash">Reset_tally</button>
+      <button class="reset-two reset dotSlash">Reset_tally</button>
+      <button class="heading__close is-hidden dotSlash">Close</button>
     </div>
 
-    <div class="tally clearfix">
-      <div>Tally</div>
-      <div class="tally__wrapper">
-        <div class="tally_section">
-          <span class="underscore">Dealer</span>
-          <div class='dealer_tally'>0</div>
-        </div>
-        <div class="tally_separator">vs</div>
-        <div class="tally_section">
-          <span class="underscore">Player</span>
-          <div class='player_tally'>0</div>
-        </div>
-      </div>
-    </div>
-    <button class="reset dotSlash">Reset_tally</button>
+    <main>
 
-    <!-- <hr> -->
-
-    <div class="content">
-      <div class="dealer clearfix">
-        <div class="player_stats">
-          <h2 class="underscore">Dealer</h2>
-          <div class="dealer_score score">
-            <span class="score_text">Score:</span>
-            <span class="score_score"><span class="score-push">?</span></span>
-          </div>
-        </div>
-        <div class="dealer_cards row clearfix"></div>
-      </div>
-
-      <div class="secondHand clearfix is-hidden">
-        <div class="player_stats">
-          <h2 class="underscore">1st_hand</h2>
-          <div class="secondHand_score score">
-            <span class="score_text">Score:</span>
-            <span class="score_score"></span>
-          </div>
-        </div>
-        <div class="secondHand_cards row clearfix"></div>
+      <div class="tally clearfix">
         
-        <div class="secondHand_choice is-hidden">
-          <button class="hit dotSlash">Hit</button>
-          <button class="stand dotSlash">Stand</button>
+        <div class="tally__wrapper">
+          <h3 class="tally__title">Tally</h3>
+          <div class="tally__section">
+            <span class="tally__label underscore">Dealer</span>
+            <div class='dealer__tally'>0</div>
+          </div>
+
+          <div class="tally__separator">vs</div>
+
+          <div class="tally__section">
+            <span class="tally__label underscore">Player</span>
+            <div class='player__tally'>0</div>
+          </div>
         </div>
-        <div class="secondHand_result message is-hidden"></div>
       </div>
-      
-      <div class="player clearfix">
-        <div class="player_stats">
-          <h2 class="underscore">Player</h2>
-          <div class="player_score score">
-            <span class="score_text">Score:</span>
-            <span class="score_score"></span>
+
+      <button class="reset-one reset dotSlash">Reset_tally</button>
+
+      <div class="content">
+        <div class="dealer person clearfix">
+          <div class="player__stats">
+            <h2 class="underscore">Dealer</h2>
+            <div class="dealer__score">
+              <span class="score__text">Score:</span>
+              <span class="score__number"><span class="charac-push">?</span></span>
+            </div>
+          </div>
+          <div class="dealer__cards cards row clearfix">
+              <div class="card-wrapper">
+                <div class="card card--placeholder"></div>
+              </div>
+              <div class="card-wrapper">
+                <div class="card card--placeholder"></div>
+              </div>
           </div>
         </div>
 
-        <div class="player_cards row"></div>
-        
-        <div class="player_choice">
-          <button class="hit dotSlash">Hit</button>
-          <button class="stand dotSlash">Stand</button>
+        <div class="secondHand person clearfix is-hidden">
+        <div class="clearfix">
+          <div class="player__stats">
+              <h2 class="underscore">1<sup>st</sup>_hand</h2>
+              <div class="secondHand__score">
+                <span class="score__text">Score:</span>
+                <span class="score__number"></span>
+              </div>
+            </div>
+            <div class="secondHand__cards cards row clearfix">
+            </div>
+          </div>
+          <div class="secondHand__choice is-hidden">
+            <button class="hit dotSlash">Hit</button>
+            <button class="stand dotSlash">Stand</button>
+          </div>
+          <div class="secondHand__result message is-hidden"></div>
         </div>
-        <div class="player_result message is-hidden"></div>
+        
+        <div class="player person clearfix">
+          <div class="clearfix">
+            <div class="player__stats">
+              <h2 class="underscore">Player</h2>
+              <div class="player__score">
+                <span class="score__text">Score:</span>
+                <span class="score__number"><span class="charac-push">?</span></span>
+              </div>
+            </div>
+
+            <div class="player__cards cards row">
+              <div class="card-wrapper">
+                <div class="card card--placeholder"></div>
+              </div>
+              <div class="card-wrapper">
+                <div class="card card--placeholder"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="player__choice">
+            <button class="deal dotSlash">Deal</button>
+            <button class="hit is-hidden dotSlash">Hit</button>
+            <button class="stand is-hidden dotSlash">Stand</button>
+          </div>
+          <div class="player__result message is-hidden"></div>
+        </div>
+
+        <div class="split is-hidden"><span class="split__message message">Would you like to split your hand?</span>
+          <button class="split-button-yes dotSlash">Yes</button>
+          <button class="split-button-no dotSlash">No</button>
+        </div>
+
+        <button class="deal__button dotSlash is-hidden">Deal_again</button>
+
       </div>
 
-      <div class="split is-hidden"><span class="message">Would you like to split the hand?</span>
-        <button class="split-button--yes dotSlash">Yes</button>
-        <button class="split-button--no dotSlash">No</button>
-      </div>
-
-      <div class="deal">
-        <button class="deal_button dotSlash">Deal_again</button>
-      </div>
-    </div>
+    </main>
 
     <div class="footer">
-      <span>© Made by Helen Zhou 2017</span>
-      <div class="heading2">
-        <h1 class="title dotSlash">Blackjack</h1>
-        <span class="title_subtext dotSlash">How_to_play</span>
+      <span class="footer__text">© Made by Helen Zhou 2017</span>
+      <div class="heading-alt heading__text">
+        <h1 class="heading__title dotSlash">Blackjack</h1>
+        <span class="heading__subtext dotSlash">How_to_play</span>
       </div>
     </div>
+
   </div>
 
   <div class="notification is-hidden"></div>
+
+  <div class="modal is-hidden">
+      <div class="modal__content">
+        <h2 class="underscore modal__title">The_objective</h2>
+        <p class="modal__text">Blackjack is a simple card game where the player aims to get a count as close to 21 as possible (without going over 21). The value of the numbered cards is the number of that card. Face cards are 10 and an ace is worth either 1 or 11 (whichever is more favourable).</p>
+        <h2 class="underscore modal__title">The_deal</h2>
+        <p class="modal__text">NUMBER OF CARDS IN USE = 1 PACK. The game starts with two cards for the dealer (one of which is hidden to the player until the end of the game) and two cards for the player. If the dealer or the player's first two cards are an ace and a face card (or 10); this becaomes a natural blackjack and the game immediately ends.</p>
+        <h2 class="underscore modal__title">The_play</h2>
+        <p class="modal__text">The player then decides whether to 'stand' (keep the current cards) or 'hit' (get dealt an additional card to try and get closer to 21). The player can hit one and a time until they decide to stand, or 'goes bust' (goes over 21). In the latter case the player loses. If the player stands, the dealer's proceeds to play.</p>
+        <h2 class="underscore modal__title">Dealer's_play</h2>
+        <p class="modal__text">After the player stands, the dealer's hidden card is revealed. If the total is 17 or higher, the dealer stands. Otherwise he hits until the total is 17 or more, before he stands. The totals are then compared with the player's hand.</p>
+        <h2 class="underscore modal__title">Splitting_pairs</h2>
+        <p class="modal__text">If the player's first two cards are the same value (e.g. two sixes or two face cards deemed 10 each), then the player has a choice of splitting the hand. If so, the two hands are treated as two separate hands. Once the hand is split, another card is dealt to the first hand, and the player plays until they stand or goes bust. Then another card is dealt to the second hand, and the player plays until they stand or goes bust. With a pair of aces, the player is dealt a card for each ace and can not draw again. This version allows no more than one split.</p>
+        <button class="modal__close dotSlash">Close</button>
+    </div>
+  </div>
 
 
   <script src="https://code.jquery.com/jquery-3.1.0.js"></script>

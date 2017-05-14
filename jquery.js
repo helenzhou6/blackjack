@@ -135,22 +135,30 @@ $(document).ready(function () {
     secondHand.result = undefined;
     secondHand.gameResult = undefined;
     // player.cards = [{
-    //   number: 3,
+    //   number: 10,
+    //   suit: 2,
+    // }, {
+    //   number: 10,
+    //   suit: 3,
+    // }];
+    // dealer.cards = [{
+    //   number: 2,
     //   suit: 2,
     // }, {
     //   number: 3,
     //   suit: 3,
     // }];
-    // player.score = score(player.cards);
-    // ui(player);
+    player.score = score(player.cards);
+    ui(player);
+    ui(dealer);
     drawCard(player, 2);
     drawCard(dealer, 1, true);
     drawCard(dealer, 1, false);
     
     // Checks for split game
-    if (player.cards[0].number === player.cards[1].number) {
+    if (player.cards[0].number === player.cards[1].number || player.cards[0].number > 9 && player.cards[1].number > 9) {
       $('.split').removeClass('is-hidden');
-      $('.player_choice').addClass('is-hidden');
+      $('.player__choice').addClass('is-hidden');
     }
 
     // Checks for natural wins (passive)
@@ -172,7 +180,7 @@ $(document).ready(function () {
     }
   }
 
-  restart();
+  // restart();
 
   // GAME PLAY
   // Draws a card, then updates score and UI
@@ -183,7 +191,10 @@ $(document).ready(function () {
       type.cards.push(randomCard);
     }
     type.score = score(type.cards);
-    ui(type);
+
+    if (!isHidden){
+      ui(type);
+    }
   }
 
   // Dealer plays
@@ -241,25 +252,34 @@ $(document).ready(function () {
   //SPLIT GAME -- but only allows one split rather than the maximum of three splits
   // When player agrees to split game
   function splitGame(){
-    isFirstRound = true;
 
     // If two aces
     if (player.cards[0].number === 1) {
       secondHand.cards.push(player.cards[0]);
       player.cards.shift();
-      hit(player);
-      hit(secondHand);
-      dealerPlays();
+      drawCard(player);
+      drawCard(secondHand);
+      if (player.score < 21 && secondHand.score < 21){
+        dealerPlays();
+      }
+      updateResult(player);
+      updateResult(secondHand);
       endGame();
 
     // Otherwise splits the game into two rounds
     } else {
-      $('.secondHand_choice').removeClass('is-hidden');
+      isFirstRound = true;
+      $('.secondHand__choice').removeClass('is-hidden');
+      $(".player").addClass('is-inactive');
       secondHand.cards.push(player.cards[0]);
       player.cards.shift();
       player.score = score(player.cards);
+      drawCard(secondHand);
       secondHand.score = score(secondHand.cards);
-      hit(secondHand);
+      if (secondHand.score === 21){
+        updateResult(secondHand);
+        toSecondRound();
+      }
       ui(player);
     }
   }
@@ -267,11 +287,15 @@ $(document).ready(function () {
   // Transfers from first hand/round to second hand/round
   function toSecondRound(){
     isFirstRound = false;
-    hit(player);
-    $('.player_choice').removeClass('is-hidden');
-    $('.secondHand_choice').addClass("is-hidden");
+    $('.player__choice').removeClass('is-hidden');
+    $('.secondHand__choice').addClass("is-hidden");
     $('.secondHand').addClass('is-inactive');
     $('.player').removeClass('is-inactive');
+    drawCard(player);
+    if (player.score === 21){
+      updateResult(player);
+      endGame();
+    }
   }
 
 // ON CLICK UI
@@ -286,41 +310,66 @@ $(document).ready(function () {
   });
 
  // Restart the game UI
-  $('.deal_button').click(function(e){
-    $('.notification').addClass('is-hidden');
-    $('.secondHand_choice').addClass('is-hidden');
-    $('.player_choice').removeClass('is-hidden');
-    $('.player_result').addClass('is-hidden');
-    $('.secondHand_result').addClass('is-hidden');
-    $('.secondHand').addClass('is-hidden');
-    $('.player').removeClass('is-inactive');
-    $('.secondHand').removeClass('is-inactive');
-    $('.dealer_score > .score_score').html('<span class="score-push">?<span>');
+  $('.deal__button').click(function(e){
+    e.preventDefault();
+    $('.split, .secondHand, .deal__button, .player__result, .secondHand__result, .notification, .secondHand__choice').addClass('is-hidden');
+    $('.player__choice, .player').removeClass('is-hidden');
+    $('.player, .secondHand').removeClass('is-inactive');
+    $('.player .player__stats h2').html("Player");
+    $('.dealer__score > .score__number').html('<span class="charac-push">?<span>');
     restart();
   });
 
-  $('.player_choice .hit').click(function(e){
+  $('.reset').click(function(e){
+    e.preventDefault();
+    $('.split, .secondHand, .deal__button, .player__result, .secondHand__result, .notification, .secondHand__choice').addClass('is-hidden');
+    $('.player__choice, .player').removeClass('is-hidden');
+    $('.player, .secondHand').removeClass('is-inactive');
+    $('.player .player__stats h2').html("Player");
+    $('.dealer__score > .score__number').html('<span class="charac-push">?<span>');
+    $('.deal').removeClass('is-hidden');
+    $('.hit, .stand').addClass('is-hidden');
+    $('.player__score > .score__number').html('<span class="charac-push">?<span>');
+    $('.dealer__cards, .player__cards').html(`
+          <div class='card-wrapper'>
+              <div class='card card--placeholder'></div>
+          </div>
+          <div class='card-wrapper'>
+              <div class='card card--placeholder'></div>
+          </div>
+        `);
+  });
+
+  $('.deal').click(function(e){
+    e.preventDefault();
+    $('.hit, .stand').removeClass('is-hidden');
+    $(this).addClass('is-hidden');
+    restart();
+  });
+
+
+  $('.player__choice .hit').click(function(e){
     e.preventDefault();
     hit(player);
   });
 
-  $('.secondHand_choice .hit').click(function(e){
+  $('.secondHand__choice .hit').click(function(e){
     e.preventDefault();
     hit(secondHand);
   });
 
-  $('.split-button--no').click(function(e){
+  $('.split-button-no').click(function(e){
       e.preventDefault();
       $('.split').addClass('is-hidden');
-      $('.player_choice').removeClass('is-hidden');
+      $('.player__choice').removeClass('is-hidden');
   });
 
-  $('.split-button--yes').click(function(e){
+  $('.split-button-yes').click(function(e){
       e.preventDefault();
       $('.split').addClass('is-hidden');
       splitGame();
       $(".secondHand").removeClass('is-hidden');
-      $(".player").addClass('is-inactive');
+      $('.player .player__stats h2').html("2<sup>nd</sup>_hand");
   });
 
   $('.reset').click(function(e){
@@ -329,9 +378,10 @@ $(document).ready(function () {
         player: 0,
         dealer: 0,
       }
-      $('.dealer_tally').html(tally.dealer);
-      $('.player_tally').html(tally.player);
+      $('.dealer__tally').html(tally.dealer);
+      $('.player__tally').html(tally.player);
   });
+
   // Generates HTML
   function ui(person){
       // $(`.${person.type}_score > .score_score`).remove();
@@ -363,40 +413,46 @@ $(document).ready(function () {
         suit = '♣';
       }
 
-      if (person.cards[i].isHidden){
+      if (person.type === 'dealer' && i === 0 && dealer.cards[0].isHidden){
+        cardUI += `
+        <div class='card-wrapper' data-index="1">
+            <div class='card card--back'></div>
+          </div>
+        `;
+       } else if (person.cards[i].isHidden){
         cardUI += `
         <div class='card-wrapper' data-index="${i}">
-            <div class='card card-back'></div>
-          </div>
+            <div class='card is-hidden'></div>
+        </div>
         `;
        } else {
         cardUI += `
           <div class='card-wrapper' data-index="${i}">
             <div class='card'>
-              <span class="card_number">
+              <span class="card__number card__number--top">
                 ${icon}
               </span>
-              <span class="card_number--duplicate">
+              <span class="card__number card__number--bottom">
                 ${icon}
               </span>
-              <span class="card_suit">${suit}</span>
+              <span class="card__suit">${suit}</span>
             </div>
           </div>
         `;
       }
     }
 
-    $(`.${person.type}_cards`).html(cardUI);
+    $(`.${person.type}__cards`).html(cardUI);
 
     if (person.type === 'player' || person.type === 'secondHand') {
 
       var scoreText = person.score;
 
-      if (scoreText < 9) {
-        scoreText = `0${scoreText}`; // Not always working
+      if (person.score < 10) {
+        scoreText = `0${scoreText}`;
       }
 
-      $(`.${person.type}_score > .score_score`).html(scoreText);
+      $(`.${person.type}__score > .score__number`).html(scoreText);
     }
   };
 
@@ -413,32 +469,30 @@ $(document).ready(function () {
         scoreText = `0${scoreText}`;
     }
 
-    $('.dealer_score > .score_score').html(scoreText);
+    $('.dealer__score > .score__number').html(scoreText);
   }
 
   function endGame(){
-      $('.player').removeClass('is-inactive');
-      $('.secondHand').removeClass('is-inactive');
-      $('.player_choice').addClass('is-hidden');
-      $('.split').addClass('is-hidden');
-      // $('.dealer_score').removeClass('is-hidden');
-      $('.dealer_cards .card').css({'display': 'block'});
+      $('.player, .secondHand').removeClass('is-inactive');
+      $('.player__choice, .split').addClass('is-hidden');
+      $('.deal__button').removeClass('is-hidden');
+      $('.dealer__cards .card').css({'display': 'block'});
       
       var notification = '';;
       if(secondHand.result) {
         if(secondHand.gameResult === player.gameResult) {
-          notification += `You ${secondHand.gameResult} the 1st hand & 2nd hand.`;
+          notification = `You ${secondHand.gameResult} the 1st & 2nd hand.`;
         } else {
-          notification += `You ${secondHand.gameResult} the 1st hand & ${player.gameResult} the 2nd hand.`;
+          notification = `You ${secondHand.gameResult} the 1st hand & ${player.gameResult} the 2nd hand.`;
         }
       } else {
         notification = player.result;
       }
       $('.notification').html(notification).removeClass('is-hidden');
 
-      $('.player_result').html(player.result).removeClass('is-hidden');
-      $('.secondHand_choice').addClass('is-hidden');
-      $('.secondHand_result').html(secondHand.result).removeClass('is-hidden');
+      $('.player__result').html(player.result).removeClass('is-hidden');
+      $('.secondHand__choice').addClass('is-hidden');
+      $('.secondHand__result').html(secondHand.result).removeClass('is-hidden');
       dealerRevealsAll();
       if (player.gameResult === 'won' && (!secondHand.gameResult || secondHand.gameResult === 'drew')) {
         tally.player ++;
@@ -453,8 +507,19 @@ $(document).ready(function () {
         tally.player ++;
         tally.dealer ++;
       }
-      $('.dealer_tally').html(tally.dealer);
-      $('.player_tally').html(tally.player);
+      $('.dealer__tally').html(tally.dealer);
+      $('.player__tally').html(tally.player);
   }
+    $('.heading__subtext, .heading__title, .heading__close, .modal__close').click(function(e){
+      e.preventDefault();
+      $('.modal').toggleClass('is-hidden');
+      $('.notification').addClass('is-hidden');
+      $('.heading, .footer').toggleClass('textColor');
+      $('.heading__close').toggleClass('is-hidden');
+      $('.reset-two').toggleClass('is-hidden');
+      $('body').toggleClass('is-unscrollable');
+      // window.scrollTo(0,0);
+    });
 
+      
 });

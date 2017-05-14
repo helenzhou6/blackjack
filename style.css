@@ -3,7 +3,11 @@
 *:after {
   box-sizing: border-box; }
 
-h2, h1 {
+@media (min-width: 1700px) {
+  html {
+    font-size: calc(1rem + 0.3vw); } }
+
+h2, h1, h3 {
   margin: 0;
   font-weight: 400; }
 
@@ -20,191 +24,7 @@ body {
   background-color: #151413;
   color: #FBF4F0;
   font-family: nimbus-sans, sans-serif;
-  min-height: 100vh; }
-
-.margin {
-  padding: 1rem; }
-  @media (min-width: 768px) {
-    .margin {
-      padding: 2rem; } }
-
-.heading .title_subtext, .heading2 .title_subtext {
-  transform: rotate(-90deg) translateX(-100%);
-  font-family: fira-mono, monospace;
-  letter-spacing: 2.5px;
-  font-size: 0.75rem;
-  display: inline-block;
-  transform-origin: top left; }
-
-.heading .title, .heading2 .title {
-  margin-top: -5px;
-  font-size: 3rem; }
-
-.heading_text {
-  float: left; }
-
-.heading2 {
-  display: none; }
-  @media (min-width: 768px) {
-    .heading2 {
-      transform: rotate(-180deg) translateY(100%);
-      transform-origin: bottom center;
-      display: block;
-      margin-left: auto; } }
-
-.dotSlash {
-  text-transform: lowercase; }
-  .dotSlash:before {
-    content: './'; }
-
-.underscore {
-  text-transform: lowercase; }
-  .underscore:after {
-    content: '_'; }
-
-@media (min-width: 768px) {
-  .content {
-    margin: 0 auto 1rem auto;
-    width: 78%; }
-    .content:before {
-      height: 1px;
-      width: 110%;
-      display: block;
-      content: '';
-      background-color: #FBF4F0;
-      margin-left: -5%;
-      margin-bottom: 1rem; } }
-
-.tally {
-  clear: both;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 2.5px;
-  max-width: 9rem;
-  margin: 5rem auto 3rem auto;
-  text-align: center; }
-  .tally .tally_section {
-    margin-top: 0.5rem;
-    float: left;
-    width: 42%; }
-  .tally .tally_separator {
-    text-transform: lowercase;
-    width: 16%;
-    margin-bottom: 10px; }
-  .tally .tally__wrapper {
-    display: flex;
-    align-items: flex-end; }
-  .tally .dealer_tally, .tally .player_tally {
-    letter-spacing: -2.5px;
-    margin-right: 5px;
-    font-size: 2rem; }
-  @media (min-width: 768px) {
-    .tally {
-      margin-top: 0;
-      margin-bottom: 1rem; } }
-
-.reset {
-  margin-bottom: 3rem; }
-  @media (min-width: 768px) {
-    .reset {
-      display: none; } }
-
-.reset2 {
-  display: none; }
-  @media (min-width: 768px) {
-    .reset2 {
-      display: block;
-      float: right; } }
-
-.row {
-  margin-left: -0.5rem;
-  margin-right: -0.5rem; }
-
-.card-wrapper {
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
-  width: 50%;
-  max-width: 6rem;
-  flex-basis: 6rem;
-  float: left; }
-  @media (min-width: 768px) {
-    .card-wrapper {
-      width: 8rem;
-      flex-basis: 8rem;
-      max-width: 8rem;
-      padding-left: 1rem;
-      padding-right: 0; } }
-
-.card {
-  background-color: #FBF4F0;
-  border: 8px solid #FBF4F0;
-  color: #151413;
-  display: block;
-  height: 0;
-  padding-bottom: 140%;
-  width: 100%;
-  margin: 1rem 0;
-  border-radius: 0.4rem;
-  margin-right: 1rem;
-  position: relative;
-  font-family: fira-mono, monospace;
-  font-size: 1.3rem; }
-  @media (min-width: 768px) {
-    .card {
-      font-size: 1.5rem;
-      border: 11px solid #FBF4F0; } }
-  .card .card_number {
-    font-weight: 700;
-    position: absolute;
-    top: 0;
-    right: 0; }
-  .card .card_number--duplicate {
-    font-weight: 700;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transform: rotate(180deg); }
-  .card .card_suit {
-    position: absolute;
-    font-size: 2rem;
-    display: block;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%); }
-    @media (min-width: 768px) {
-      .card .card_suit {
-        font-size: 2.4rem; } }
-
-.is-inactive {
-  opacity: 0.5; }
-
-.notification {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  padding: 1rem;
-  margin: 0;
-  color: #151413;
-  background-color: #FBF4F0;
-  font-family: fira-mono, monospace;
-  letter-spacing: 2.5px;
-  text-align: center; }
-
-.player_stats {
-  display: block;
-  text-align: center; }
-  @media (min-width: 768px) {
-    .player_stats {
-      float: left;
-      margin: 1rem 0rem calc(3rem - 10px) 0rem;
-      text-align: left;
-      width: 9rem;
-      height: calc(9.8rem + 16px);
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      justify-content: space-between; } }
+  position: relative; }
 
 button {
   padding: 0;
@@ -216,57 +36,497 @@ button {
   color: #FBF4F0;
   padding: 0.8rem 0;
   font-family: fira-mono, monospace;
-  letter-spacing: 2.5px;
   margin-bottom: 1rem; }
   button:focus {
     outline: 1px solid #FBF4F0;
     background-color: rgba(251, 244, 240, 0.1); }
   @media (min-width: 768px) {
     button {
-      width: 15rem; } }
+      width: 12rem; } }
 
 @media (min-width: 768px) {
-  .hit {
+  .hit, .split-button-yes {
     margin-right: 1rem; } }
 
-.deal {
-  margin-top: 2rem; }
-  @media (min-width: 768px) {
-    .deal {
-      margin-bottom: 1rem; } }
+main {
+  flex-grow: 1; }
+  @media (min-width: 1000px) {
+    main {
+      display: flex;
+      max-width: 70rem;
+      margin: 0 auto;
+      width: 100%; } }
 
-.message {
+.margin-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 1rem; }
+  @media (min-width: 768px) {
+    .margin-wrapper {
+      padding: 2rem; } }
+  @media (min-width: 1000px) {
+    .margin-wrapper {
+      display: block;
+      flex-direction: row; } }
+
+.dotSlash {
+  text-transform: lowercase; }
+  .dotSlash:before {
+    content: './'; }
+
+.underscore {
+  text-transform: lowercase; }
+  .underscore:after {
+    content: '_'; }
+
+sup {
+  font-size: 0.8rem;
+  top: -1.2em; }
+
+.charac-push {
+  margin-left: 1ch; }
+
+.reset-one {
+  margin-bottom: 3rem; }
+  @media (min-width: 768px) {
+    .reset-one {
+      display: none; } }
+
+.reset-two {
+  display: none; }
+  @media (min-width: 768px) {
+    .reset-two {
+      display: block;
+      float: right; } }
+  @media (min-width: 1000px) {
+    .reset-two {
+      position: fixed;
+      right: 2rem;
+      top: 2rem; } }
+
+@media (min-width: 1000px) {
+  .heading {
+    height: 4.5rem; } }
+
+.heading__title {
+  cursor: pointer;
+  margin-top: -5px;
+  font-size: 3rem; }
+
+.heading__subtext {
+  transform: rotate(-90deg) translateX(-100%);
   font-family: fira-mono, monospace;
-  letter-spacing: 2.5px;
-  display: block;
+  line-height: 1.5rem;
+  font-size: 0.75rem;
+  display: inline-block;
+  transform-origin: top left;
+  cursor: pointer; }
+
+.heading__text {
+  float: left;
+  position: relative;
+  z-index: 103; }
+
+.heading-alt {
+  display: none; }
+  @media (min-width: 768px) {
+    .heading-alt {
+      transform: rotate(-180deg) translateY(100%);
+      transform-origin: bottom center;
+      display: block;
+      margin-left: auto;
+      position: relative;
+      z-index: 200; } }
+  @media (min-width: 1000px) {
+    .heading-alt {
+      position: fixed;
+      right: 2rem;
+      bottom: 1.84rem; } }
+
+@media (min-width: 1000px) {
+  .heading-main {
+    position: fixed;
+    left: 2rem;
+    top: 1.84rem; } }
+
+.tally {
+  clear: both;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.15rem;
+  max-width: 9rem;
+  margin: 2.5rem auto 3rem auto;
   text-align: center; }
   @media (min-width: 768px) {
-    .message {
-      margin-left: 10.5rem;
-      text-align: left; } }
+    .tally {
+      margin-top: 3rem;
+      margin-bottom: 2.5rem; } }
+  @media (min-width: 1000px) {
+    .tally {
+      max-width: none;
+      min-width: 14em;
+      text-align: right;
+      margin: 9.5rem 0 0;
+      display: block;
+      position: relative; } }
 
-.score_score {
+.dealer__tally, .player__tally {
+  letter-spacing: -0.16rem;
+  margin-right: 0.31rem;
+  font-size: 2rem; }
+  @media (min-width: 1000px) {
+    .dealer__tally, .player__tally {
+      margin-right: 0; } }
+
+.tally__section {
+  margin-top: 0.5rem;
+  float: left;
+  width: 42%; }
+  @media (min-width: 1000px) {
+    .tally__section {
+      width: 100%;
+      margin: 0;
+      float: none; } }
+
+.tally__separator {
+  text-transform: lowercase;
+  width: 16%;
+  margin-bottom: 0.63rem; }
+  @media (min-width: 1000px) {
+    .tally__separator {
+      width: 100%;
+      margin: 0;
+      float: none;
+      margin: 1.2rem -2.5px 1.2rem 0;
+      text-align: right;
+      display: inline-block; } }
+
+.tally__wrapper {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  flex-wrap: wrap; }
+  @media (min-width: 1000px) {
+    .tally__wrapper {
+      flex-wrap: no-wrap;
+      display: block;
+      padding-right: 3rem; } }
+
+.tally__title {
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.16rem;
+  width: 100%; }
+  @media (min-width: 1000px) {
+    .tally__title {
+      width: auto;
+      margin: 0;
+      position: absolute;
+      transform: translate(100%, -50%) rotate(270deg);
+      top: 50%; } }
+
+@media (min-width: 1000px) {
+  .tally__label {
+    display: none; } }
+
+@media (min-width: 768px) {
+  .content {
+    margin: 0 auto 1rem auto;
+    width: 90%; }
+    .content:before {
+      height: 1px;
+      width: 110%;
+      display: block;
+      content: '';
+      background-color: #FBF4F0;
+      margin-left: -5%;
+      margin-bottom: 2rem; } }
+
+@media (min-width: 1000px) {
+  .content {
+    width: auto;
+    margin: 1rem;
+    border-left: 1px solid #FBF4F0;
+    padding-left: 2rem; }
+    .content:before {
+      display: none;
+      margin-bottom: 1rem; } }
+
+.secondHand__choice, .player__choice, .player__result, .secondHand__result, .deal__button, .split {
+  margin-bottom: 1rem; }
+  @media (min-width: 768px) {
+    .secondHand__choice, .player__choice, .player__result, .secondHand__result, .deal__button, .split {
+      margin-left: 10.5rem; } }
+
+.secondHand__choice, .split, .player__choice, .player__result, .secondHand__result {
+  margin-top: 1rem; }
+  @media (min-width: 768px) {
+    .secondHand__choice, .split, .player__choice, .player__result, .secondHand__result {
+      margin-top: 1.5rem; } }
+
+.split__message {
+  margin-bottom: 1rem; }
+
+.person {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem; }
+  @media (min-width: 1000px) {
+    .person {
+      margin-bottom: 0; } }
+
+.player {
+  margin-top: 2rem; }
+
+.dealer {
+  margin-bottom: 2rem; }
+  @media (min-width: 768px) {
+    .dealer {
+      margin-top: 3.5rem; } }
+  @media (min-width: 1000px) {
+    .dealer {
+      margin-top: 1.5rem; } }
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; }
+  .cards > * {
+    flex-grow: 0;
+    flex-shrink: 0; }
+  @media (min-width: 768px) {
+    .cards {
+      float: right;
+      width: calc(100% - 9rem);
+      justify-content: left; } }
+  @media (min-width: 1000px) {
+    .cards {
+      width: auto;
+      float: left; } }
+
+.row {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem; }
+  @media (min-width: 1000px) {
+    .row {
+      margin-left: 0.5rem; } }
+
+.card-wrapper {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  width: 50%;
+  max-width: 6rem;
+  flex-basis: 6rem;
+  float: left; }
+  @media (min-width: 768px) {
+    .card-wrapper {
+      width: 7.4rem;
+      flex-basis: 7.4rem;
+      max-width: 7.4rem;
+      padding-left: 0.8rem;
+      padding-right: 0; } }
+
+.card {
+  background-color: #FBF4F0;
+  border: 0.5rem solid #FBF4F0;
+  color: #151413;
+  display: block;
+  height: 0;
+  padding-bottom: 140%;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 0.4rem;
+  margin-right: 1rem;
+  position: relative;
+  font-family: fira-mono, monospace;
+  font-size: 1.3rem; }
+  @media (min-width: 768px) {
+    .card {
+      font-size: 1.4rem;
+      border: 0.7rem solid #FBF4F0; } }
+
+.card--placeholder {
+  background-color: #151413;
+  border: 0.5rem solid #151413; }
+  @media (min-width: 768px) {
+    .card--placeholder {
+      font-size: 1.4rem;
+      border: 0.7rem solid #151413; } }
+  .card--placeholder:before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: -0.4rem;
+    bottom: -0.4rem;
+    right: -0.4rem;
+    left: -0.4rem;
+    border: 0.1rem dashed #FBF4F0;
+    border-radius: 0.4rem; }
+    @media (min-width: 768px) {
+      .card--placeholder:before {
+        top: -0.6rem;
+        bottom: -0.6rem;
+        right: -0.6rem;
+        left: -0.6rem; } }
+
+.card__number {
+  font-weight: 700;
+  position: absolute; }
+
+.card__number--top {
+  top: 0;
+  right: 0; }
+
+.card__number--bottom {
+  bottom: 0;
+  left: 0;
+  transform: rotate(180deg); }
+
+.card__suit {
+  position: absolute;
+  font-size: 2rem;
+  display: block;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); }
+  @media (min-width: 768px) {
+    .card__suit {
+      font-size: 2.4rem; } }
+
+.card--back {
+  background: repeating-linear-gradient(45deg, #151413, #151413 2px, #FBF4F0 2px, #FBF4F0 10px); }
+
+.player__stats {
+  display: block;
+  text-align: center;
+  margin-bottom: 1.5rem; }
+  @media (min-width: 768px) {
+    .player__stats {
+      float: left;
+      margin-bottom: 0;
+      text-align: left;
+      width: 9rem;
+      height: calc(9.8rem + 16px);
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-between; } }
+
+.score__number {
   font-size: 3.5rem;
-  letter-spacing: -2.5px;
+  letter-spacing: -0.16rem;
   margin-left: auto;
   margin-top: 0.2rem;
   font-weight: 700; }
 
-.score_text {
+.score__text {
   margin-right: 0.5rem;
   text-transform: uppercase;
   font-size: 0.75rem;
-  letter-spacing: 2.5px; }
+  letter-spacing: 0.16rem; }
+
+.message {
+  font-family: fira-mono, monospace;
+  display: block;
+  text-align: center; }
+  @media (min-width: 768px) {
+    .message {
+      text-align: left; } }
+
+.notification {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 1rem;
+  margin: 0;
+  z-index: 10000;
+  color: #151413;
+  background-color: #FBF4F0;
+  font-family: fira-mono, monospace;
+  text-align: center; }
+  @media (min-width: 768px) {
+    .notification {
+      bottom: 0;
+      top: auto; } }
 
 .footer {
   display: flex;
   align-items: flex-end;
+  width: 100%; }
+  @media (min-width: 1000px) {
+    .footer {
+      position: fixed;
+      left: 2rem;
+      bottom: 2rem;
+      z-index: 100; } }
+
+.footer__text {
   text-transform: uppercase;
   font-size: 0.4rem;
-  letter-spacing: 2.5px; }
+  letter-spacing: 0.16rem;
+  position: relative;
+  z-index: 200; }
 
-.score-push {
-  margin-left: 1ch; }
+p {
+  font-family: fira-mono, monospace;
+  line-height: 1.44rem; }
+
+.modal__title {
+  font-size: 2.5rem; }
+
+.modal {
+  background-color: #FBF4F0;
+  color: #151413;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: auto;
+  z-index: 10; }
+
+.heading__close {
+  color: #151413;
+  border-color: #151413;
+  position: relative;
+  z-index: 300;
+  display: none; }
+  @media (min-width: 768px) {
+    .heading__close {
+      display: block;
+      float: right; } }
+  @media (min-width: 1000px) {
+    .heading__close {
+      position: fixed;
+      right: 2rem;
+      top: 2rem; } }
+
+.modal__content {
+  padding: 3rem;
+  margin: 9rem auto 2rem auto;
+  max-width: 35rem; }
+  @media (min-width: 768px) {
+    .modal__content {
+      margin-left: auto;
+      margin-right: auto; } }
+  @media (min-width: 1000px) {
+    .modal__content {
+      margin-left: calc(15% + 4rem);
+      margin-right: 4rem;
+      margin-top: 12rem; } }
+
+.modal__close {
+  color: #151413;
+  border-color: #151413;
+  width: 100%;
+  margin-top: 2rem; }
+  @media (min-width: 768px) {
+    .modal__close {
+      display: none; } }
+
+.is-inactive {
+  opacity: 0.5; }
 
 .is-hidden {
   display: none; }
@@ -274,37 +534,10 @@ button {
 .is-invisible {
   visibility: hidden; }
 
-.dealer_cards,
-.player_cards,
-.secondHand_cards {
-  margin-bottom: 2rem;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap; }
-  .dealer_cards > *,
-  .player_cards > *,
-  .secondHand_cards > * {
-    flex-grow: 0;
-    flex-shrink: 0; }
-  @media (min-width: 768px) {
-    .dealer_cards,
-    .player_cards,
-    .secondHand_cards {
-      float: right;
-      width: calc(100% - 9rem);
-      justify-content: left; } }
+.is-unscrollable {
+  overflow: hidden; }
 
-.dealer, .player, .secondHand {
-  margin-bottom: 0.8rem; }
-
-@media (min-width: 768px) {
-  .dealer {
-    margin-bottom: 0; } }
-
-.dealer_cards .card-wrapper {
-  display: block; }
-
-.card-back {
-  background: repeating-linear-gradient(45deg, #151413, #151413 2px, #FBF4F0 2px, #FBF4F0 10px); }
+.textColor {
+  color: #151413; }
 
 /*# sourceMappingURL=style.css.map */
