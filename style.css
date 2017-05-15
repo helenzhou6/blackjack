@@ -15,6 +15,13 @@ h2 {
   font-size: 2.3rem;
   display: inline-block; }
 
+a, a:link, a:visited, a:active {
+  color: #FBF4F0;
+  text-decoration: none; }
+
+a:hover {
+  text-decoration: underline; }
+
 .clearfix:after {
   content: "";
   display: table;
@@ -253,16 +260,22 @@ sup {
       display: none;
       margin-bottom: 1rem; } }
 
-.secondHand__choice, .player__choice, .player__result, .secondHand__result, .deal__button, .split {
+.spacing {
   margin-bottom: 1rem; }
   @media (min-width: 768px) {
-    .secondHand__choice, .player__choice, .player__result, .secondHand__result, .deal__button, .split {
+    .spacing {
       margin-left: 10.5rem; } }
 
-.secondHand__choice, .split, .player__choice, .player__result, .secondHand__result {
+.deal__button {
+  margin-bottom: 3rem; }
+  @media (min-width: 768px) {
+    .deal__button {
+      margin-bottom: 0; } }
+
+.margin-top {
   margin-top: 1rem; }
   @media (min-width: 768px) {
-    .secondHand__choice, .split, .player__choice, .player__result, .secondHand__result {
+    .margin-top {
       margin-top: 1.5rem; } }
 
 .split__message {
@@ -298,7 +311,7 @@ sup {
     .cards {
       float: right;
       width: calc(100% - 9rem);
-      justify-content: left; } }
+      justify-content: flex-start; } }
   @media (min-width: 1000px) {
     .cards {
       width: auto;
@@ -339,18 +352,39 @@ sup {
   margin-right: 1rem;
   position: relative;
   font-family: fira-mono, monospace;
-  font-size: 1.3rem; }
+  font-size: 1.3rem;
+  background-size: 1.2rem; }
   @media (min-width: 768px) {
     .card {
+      background-size: 2rem;
       font-size: 1.4rem;
       border: 0.7rem solid #FBF4F0; } }
+
+.card--spade {
+  background-image: url("img/spade.svg");
+  background-repeat: no-repeat;
+  background-position: center center; }
+
+.card--heart {
+  background-image: url("img/heart.svg");
+  background-repeat: no-repeat;
+  background-position: center center; }
+
+.card--club {
+  background-image: url("img/club.svg");
+  background-repeat: no-repeat;
+  background-position: center center; }
+
+.card--diamond {
+  background-image: url("img/diamond.svg");
+  background-repeat: no-repeat;
+  background-position: center center; }
 
 .card--placeholder {
   background-color: #151413;
   border: 0.5rem solid #151413; }
   @media (min-width: 768px) {
     .card--placeholder {
-      font-size: 1.4rem;
       border: 0.7rem solid #151413; } }
   .card--placeholder:before {
     display: block;
@@ -381,17 +415,6 @@ sup {
   bottom: 0;
   left: 0;
   transform: rotate(180deg); }
-
-.card__suit {
-  position: absolute;
-  font-size: 2rem;
-  display: block;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%); }
-  @media (min-width: 768px) {
-    .card__suit {
-      font-size: 2.4rem; } }
 
 .card--back {
   background: repeating-linear-gradient(45deg, #151413, #151413 2px, #FBF4F0 2px, #FBF4F0 10px); }
@@ -468,12 +491,12 @@ sup {
   position: relative;
   z-index: 200; }
 
-p {
-  font-family: fira-mono, monospace;
-  line-height: 1.44rem; }
-
 .modal__title {
   font-size: 2.5rem; }
+
+.modal__text {
+  font-family: fira-mono, monospace;
+  line-height: 1.44rem; }
 
 .modal {
   background-color: #FBF4F0;

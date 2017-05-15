@@ -29,6 +29,15 @@ h2 {
 	display: inline-block;
 }
 
+a, a:link, a:visited, a:active {
+	color: $color;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
 .clearfix:after {
   content: "";
   display: table;
@@ -53,7 +62,6 @@ button {
     color: $color;
     padding: 0.8rem 0;
     font-family: fira-mono, monospace;
-    // letter-spacing: 2.5px;
     margin-bottom: 1rem;
 
     &:focus {
@@ -82,9 +90,6 @@ main {
 		margin: 0 auto;
 		width: 100%;
 	}
-
-	// @include media(2000px)
-	// flex-grow: 0;
 }
 
 .margin-wrapper {
@@ -99,7 +104,6 @@ main {
 	@include media(1000px) {
 		display: block;
 		flex-direction: row;
-		// padding: 2rem;
 	}
 }
 
@@ -228,7 +232,7 @@ sup {
 		max-width: none;
 		min-width: 14em;
 		text-align: right;
-		margin: 9.5rem 0 0; // is not correct
+		margin: 9.5rem 0 0;
 		display: block;
 		position: relative;
 	}
@@ -267,7 +271,7 @@ sup {
 		float: none;
 		margin: 1.2rem -2.5px 1.2rem 0;
 		text-align: right;
-		display: inline-block; //Not sure why this works but not block
+		display: inline-block;
 	}
 }
 
@@ -291,7 +295,6 @@ sup {
 	width: 100%;
 
 	@include media(1000px) {
-		// font-size: 0.4rem;
 		width: auto;
 		margin: 0;
 		position: absolute;
@@ -326,7 +329,6 @@ sup {
 	@include media(1000px) {
 		width: auto;
 		margin: 1rem;
-		// flex-grow: 1;
 		border-left: 1px solid $color;
 		padding-left: 2rem;
 
@@ -336,32 +338,24 @@ sup {
 		}
 	}
 
-	@include media(2000px){
-		// flex-grow: 0;
-	}
 }
 
-.secondHand__choice, .player__choice, .player__result, .secondHand__result, .deal__button, .split {
+.spacing {
 	margin-bottom: 1rem;
-	// margin-top: 2rem;
 	@include media(768px) {
-		// display: flex;
-		// justify-content: center;
 		margin-left: 10.5rem;
-
 	}
-	@include media(1000px) {
-		// display: block;
-		// margin-left: 11rem;
-		// margin-bottom: 0;
-	}
-
 }
 
-.secondHand__choice, .split, .player__choice, .player__result, .secondHand__result {
+.deal__button {
+	margin-bottom: 3rem;
+	@include media(768px) {
+		margin-bottom: 0;
+	}
+}
+	
+.margin-top	{
 	margin-top: 1rem;
-	// margin-bottom: 1rem;
-
 	@include media(768px) {
 		margin-top: 1.5rem;
 	}
@@ -377,10 +371,6 @@ sup {
 	@include media(1000px) {
 		margin-bottom: 0;
 	}
-	// @include media(768px) {
-	// 	margin-bottom: 2rem;
-	// 	margin-top: 2rem;
-	// }
 }
 
 .player {
@@ -409,7 +399,7 @@ sup {
 	@include media(768px) {
 		float: right;
 		width: calc(100% - 9rem);
-		justify-content: left;
+		justify-content: flex-start;
 	}
 	@include media(1000px) {
 		width: auto;
@@ -458,12 +448,24 @@ sup {
   position: relative;
   font-family: fira-mono, monospace;
   font-size: 1.3rem;
-  // position: relative;
+  background-size: 1.2rem; 
+
 
   @include media(768px) {
+  	background-size: 2rem; 
   	font-size: 1.4rem;
   	border: 0.7rem solid $color;
   }
+}
+
+$suits: 'spade', 'heart', 'club', 'diamond';
+
+@each $suit in $suits {
+	.card--#{$suit} {
+		background-image: url('img/#{$suit}.svg');
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
 }
 
 .card--placeholder {
@@ -472,7 +474,6 @@ sup {
 
 
   @include media(768px) {
-  	font-size: 1.4rem;
   	border: 0.7rem solid $background;
   }
 
@@ -512,19 +513,6 @@ sup {
 	transform: rotate(180deg);
 }
 
-.card__suit {
-	position: absolute;
-	font-size: 2rem; // desktop font-size: 3rem;
-	display: block;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-
-	@include media(768px) {
-	  	font-size: 2.4rem;
-	}
-}
-
 .card--back {
 	background: repeating-linear-gradient(
 	  45deg,
@@ -544,7 +532,6 @@ sup {
 	@include media(768px) {
 		float: left;
 		margin-bottom: 0;
-		// margin: 1rem 1rem calc(3rem - 10px) 0rem;
 		text-align: left;
 		width: 9rem;
 		height: calc(9.8rem + 16px);
@@ -572,7 +559,6 @@ sup {
 // Player messages
 .message {
 	font-family: fira-mono, monospace;
-    // letter-spacing: 2.5px;
     display: block;
     text-align: center;
 
@@ -593,7 +579,6 @@ sup {
 	color: $background;
 	background-color: $color;
 	font-family: fira-mono, monospace;
-    // letter-spacing: 2.5px;
     text-align: center;
 
     @include media(768px) {
@@ -627,17 +612,13 @@ sup {
 }
 
 // How to play
-p {
-	font-family: fira-mono, monospace;
-    line-height: 1.44rem;
-}
-
 .modal__title {
 	font-size: 2.5rem;
 }
 
 .modal__text {
-
+	font-family: fira-mono, monospace;
+    line-height: 1.44rem;
 }
 
 .modal {
@@ -713,7 +694,6 @@ p {
 
 .is-unscrollable {
 	overflow: hidden;
-	// min-height: 100vh;
 }
 
 .textColor {

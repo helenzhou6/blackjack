@@ -163,7 +163,7 @@ $(document).ready(function () {
 
     // Checks for natural wins (passive)
     if (dealer.score === 21 && player.score !== 21) {
-      player.result = "The dealer got a natural win";
+      player.result = "Tough luck, dealer got blackjack.";
       player.gameResult = 'lost';
       endGame();
       $('.secondHand').addClass('is-hidden');
@@ -173,7 +173,7 @@ $(document).ready(function () {
       endGame();
       $('.secondHand').addClass('is-hidden');
     } else if (player.score === 21 && dealer.score === 21) {
-      player.result = "You drew - you both got a natural win";
+      player.result = "Say what, you both got blackjack.";
       player.gameResult = 'drew';
       endGame();
       $('.secondHand').addClass('is-hidden');
@@ -214,7 +214,7 @@ $(document).ready(function () {
     
     // Passive check if gone bust
     if (playerType.score > 21) {
-      playerType.result = `You got busted!`;
+      playerType.result = `You went bust.`;
       playerType.gameResult = 'lost';
       if (isFirstRound) {
         toSecondRound();
@@ -238,13 +238,13 @@ $(document).ready(function () {
   // Updates result
   function updateResult(playerType){
     if (playerType.score === dealer.score) {
-      playerType.result = 'you drew';
+      playerType.result = 'You drew';
       playerType.gameResult = 'drew';
     } else if (playerType.score > 21 && dealer.score < 22 || dealer.score > playerType.score && dealer.score < 22) {
-      playerType.result = 'you lost';
+      playerType.result = 'You lost';
       playerType.gameResult = 'lost';
     } else {
-      playerType.result = 'you won!';
+      playerType.result = 'You won!';
       playerType.gameResult = 'won';
     }
   };
@@ -402,21 +402,21 @@ $(document).ready(function () {
         icon = person.cards[i].number;
       }
 
-      var suit = 0;
+      var suit;
       if (person.cards[i].suit === 1) {
-        suit = '♠';
+        suit = 'spade';
       } else if (person.cards[i].suit === 2) {
-        suit = '♥';
+        suit = 'heart';
       } else if (person.cards[i].suit === 3) {
-        suit = '♦';
+        suit = 'diamond';
       } else if (person.cards[i].suit === 4) {
-        suit = '♣';
+        suit = 'club';
       }
 
       if (person.type === 'dealer' && i === 0 && dealer.cards[0].isHidden){
         cardUI += `
         <div class='card-wrapper' data-index="1">
-            <div class='card card--back'></div>
+            <div class='card card--back ${(suit ? `card--${suit}` : '')}'></div>
           </div>
         `;
        } else if (person.cards[i].isHidden){
@@ -428,14 +428,13 @@ $(document).ready(function () {
        } else {
         cardUI += `
           <div class='card-wrapper' data-index="${i}">
-            <div class='card'>
+            <div class='card ${(suit ? `card--${suit}` : '')}'>
               <span class="card__number card__number--top">
                 ${icon}
               </span>
               <span class="card__number card__number--bottom">
                 ${icon}
               </span>
-              <span class="card__suit">${suit}</span>
             </div>
           </div>
         `;
@@ -512,11 +511,9 @@ $(document).ready(function () {
   }
     $('.heading__subtext, .heading__title, .heading__close, .modal__close').click(function(e){
       e.preventDefault();
-      $('.modal').toggleClass('is-hidden');
+      $('.modal, .heading__close, .reset-two').toggleClass('is-hidden');
       $('.notification').addClass('is-hidden');
       $('.heading, .footer').toggleClass('textColor');
-      $('.heading__close').toggleClass('is-hidden');
-      $('.reset-two').toggleClass('is-hidden');
       $('body').toggleClass('is-unscrollable');
       // window.scrollTo(0,0);
     });
